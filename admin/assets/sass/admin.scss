@@ -1,0 +1,133 @@
+
+@import 'compass';
+@import 'variables';
+
+//@include background-image(linear-gradient(to bottom, $grfx-green, darken($grfx-green, 30%)));
+
+#uploader {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-bottom: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    .plupload_header{
+        background: #333;
+
+
+        .plupload_header_content{
+            background: url('../../../assets/img/logo-x-small.png') no-repeat;
+            background-position: right center;
+            padding-left: 10px;
+            color: $grfx-green;
+
+        }
+
+
+
+    }
+}
+
+#grfx-upload-manager{
+
+    //if upload was successful
+    .grfx-success{
+        color: red;
+        padding-left: 10px;
+        font-style: oblique;
+    }
+
+    //signifies upload is complete
+    .grfx-upload-complete{
+        td{
+            color: #ccc;
+        }
+    }
+
+    table{
+        tbody{
+            
+            #grfx-upload-row-template{
+                display: none;
+            }
+            
+            tr{
+                background-color: #f5f5f5;
+                &.alternate{
+                    background-color: darken(#f5f5f5, 2%);
+                }
+                &.grfx-new-upload td{
+                    background-color: mix($grfx-green, white, 20%);
+                    border-bottom: 1px solid darken(mix($grfx-green, white, 20%), 7%);
+                }
+                &.grfx-upload-processing{
+                    font-style: italic;
+                    td{
+                        color: #0074a2;
+                    }
+                }
+                .grfx-loader-gif{
+
+                }
+            }
+        }
+    }
+}
+.grfx-uploader-cron{
+    width: 100% !important;
+    color: #888 !important;
+    background: none !important;
+}
+.grfx-ftp{
+    width: 100% !important;
+    color: #888 !important;
+    background: none !important;
+}
+.grfx-divider{
+    margin-bottom: 100px;
+}
+#grfx_watermark_image_preview {
+    h2{
+        color: #ddd;
+        font-size: 24px;
+        margin: 20px;
+    }
+    background-color: #333;
+    img{
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    #upload_watermark_form{
+        display: block;
+        padding: 20px;
+        span{
+            color: white;
+        }
+    }
+}
+#license-accordion{
+    h3{
+
+        background: $grfx-green;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        font-transform: uppercase;
+        @include border-radius(0);
+
+    }
+    
+    input[type="text"]{
+        background-color: #fff;
+        font-size: 1.7em;        
+        margin: 0;
+        outline: 0 none;
+        padding: 3px 8px;
+        width: 100% !important;
+
+    }   
+
+}
+.grfx-logo-right{
+    display: block;
+    float: right;
+}

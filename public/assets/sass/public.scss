@@ -1,0 +1,45 @@
+#grfx-product-option{
+    font-size: 18px;
+}
+
+.grfx-options-descriptions{
+    margin: 10px 0 10px 0;
+    display: none;
+    &.show{
+        display: block;
+    }
+    .grfx-option-label{
+        font-weight: bold;
+    }  
+}
+
+.grfx-modal{
+    h1{
+        text-align: center;
+    }
+    width: 600px;
+    padding: 2em;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.35);
+    background-color: white;
+    height: 90%;
+    overflow:scroll;
+    .grfx-loader-gif{
+        padding: 100px;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+.grfx-modal-close{
+    font-size: 20px;
+    display: block;
+    float: right;
+    cursor: pointer;
+}
+
+.grfx-license-purchased{
+    font-size: 12px;
+    max-height: 300px;
+    overflow: scroll;
+}
