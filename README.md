@@ -41,11 +41,30 @@ Need help? Most hosts can set this up for you if you call them.
 ### 3: Activate!
 Now, go to your wordpress plugins directory [admin->plugins] and activate the **grfx** plugin. Things are getting really awesome now.
 
-## 4: Set up your store info.
+### 4: Set up your store info.
 
 - Once activating, you be taken to an introduction page with three links.
 - Follow each link, and fully configure your price and license settings. It should be self-explanatory.
 - Now configure woocommerce itself for all of your basic store and payment gateway information.
+
+### 5: Setting up the Cron (optional?)
+This is optional for single site, **required for multisite**. It is suggested you set up this feature if you upload a lot. Once you upload your images and enqueue them, your site will publish them a few at a time until they are done. What is the advantage in this? If your one of those super-dedicated stock image creators, you can upload a thousand of your meta-data-prepared images, go to bed, and wake up with them all published.
+
+For a **multisite** network its, no joke, highly recommended you get this feature active on your site. If not, several users publishing at once could cause overloads. Otherwise multiple user's files will be processed in line, one after another. 
+
+#### Setting up Cron - Simple
+Chances are, if you are on a popular host such as BLUEHOST with cpanel, cron jobs are easy to set up. 
+- Copy the cron-command from your Woocommerce->Settings->grfx area. It should look like this:
+```* * * * * curl --silent 'http://www.mysite.com/grfx/test/wp-content/plugins/grfx/cron.php?grfx_crontype=1&grfx_cronpass=8eb09aa5edbf60ef499c682a90916c28'```
+- Delete the leading five asterisks, so that it looks like this: 
+```curl --silent 'http://www.mysite.com/grfx/test/wp-content/plugins/grfx/cron.php?grfx_crontype=1&grfx_cronpass=8eb09aa5edbf60ef499c682a90916c28'```
+- Go to your Cron Jobs area, and set up a cron job for **every minute**. 
+- Paste the above code into the command area. 
+- Save.
+
+...the cron job should run every minute now. When you upload images, it will start within a minute of their being on your server.
+
+NOTE: [This is merely a check it runs every minute. If no images are staged, no server resources are used. If it finds images, it processes them a few at a time.] 
 
 ## Want to run a grfx network?
 **grfx**'s huge advantage is that it is multisite compatible! This means you can host a whole bunch of artists! If you can host a multisite network, then you must be really smart with wordpress! Please contribute to our code and help our growth.
