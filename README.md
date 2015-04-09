@@ -39,7 +39,11 @@ Need help? Most hosts can set this up for you if you call them.
  - Just ABOVE that line, paste this code: ```if(defined('GRFX_GETTING_INFO')) return; ```
 
 ### 3: Activate!
-Now, go to your wordpress plugins directory [admin->plugins] and activate the **grfx** plugin. Things are getting really awesome now.
+
+- Install the grfx.zip file the way you install any wordpress plugin. 
+- NOTE: If you downloaded the zip from github, rename it to grfx.zip. If you have the unzipped folder (such as a mac user) rezip it and ensure that it is called grfx.zip. 
+- Don't know how to install a plugin? https://codex.wordpress.org/Managing_Plugins
+- Now, go to your wordpress plugins directory [admin->plugins] and activate the **grfx** plugin. Things are getting really awesome now.
 
 ### 4: Set up your store info.
 
