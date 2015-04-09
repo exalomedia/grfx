@@ -54,7 +54,7 @@ For a **multisite** network its, no joke, highly recommended you get this featur
 
 #### Setting up Cron - Simple
 Chances are, if you are on a popular host such as BLUEHOST with cpanel, cron jobs are easy to set up. 
-- Copy the cron-command from your Woocommerce->Settings->grfx area. It should look like this:
+- Copy the cron-command from your **Woocommerce->Settings->grfx** area. It should look like this:
 ```* * * * * curl --silent 'http://www.mysite.com/grfx/test/wp-content/plugins/grfx/cron.php?grfx_crontype=1&grfx_cronpass=8eb09aa5edbf60ef499c682a90916c28'```
 - Delete the leading five asterisks, so that it looks like this: 
 ```curl --silent 'http://www.mysite.com/grfx/test/wp-content/plugins/grfx/cron.php?grfx_crontype=1&grfx_cronpass=8eb09aa5edbf60ef499c682a90916c28'```
@@ -64,7 +64,16 @@ Chances are, if you are on a popular host such as BLUEHOST with cpanel, cron job
 
 ...the cron job should run every minute now. When you upload images, it will start within a minute of their being on your server.
 
-NOTE: [This is merely a check it runs every minute. If no images are staged, no server resources are used. If it finds images, it processes them a few at a time.] 
+#### Setting up Cron - Less Simple
+Well, really, this is simple if your used to server-side stuff and the shell. 
+- Get the cron command from your settings area (as stated above). It should look like this: ```* * * * * curl --silent 'http://www.mysite.com/grfx/test/wp-content/plugins/grfx/cron.php?grfx_crontype=1&grfx_cronpass=8eb09aa5edbf60ef499c682a90916c28'```
+- Log into your server with the shell. 
+- type: ``` crontab -e``` (or similar for your environment)
+- Paste the above line into your cron file.
+- Save it.
+
+#### Cron Note:
+The cron job merely runs a check it runs every minute. If no images are staged, no server resources are used. If it finds images, it processes them a few at a time.
 
 ## Want to run a grfx network?
 **grfx**'s huge advantage is that it is multisite compatible! This means you can host a whole bunch of artists! If you can host a multisite network, then you must be really smart with wordpress! Please contribute to our code and help our growth.
