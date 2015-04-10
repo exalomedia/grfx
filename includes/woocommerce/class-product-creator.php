@@ -282,12 +282,14 @@ class grfx_Product_Creator {
             update_post_meta($post_id, 'grfx_finish_product_tag', $this->product_tags);
         } else {
             wp_set_object_terms($post_id, $this->product_tags, 'product_tag');
+            update_post_meta($post_id, 'grfx_finish_product_tag', false);
         }
        
         if(!taxonomy_exists('product_type')){
             update_post_meta($post_id, 'grfx_finish_product_type', 'stock_image');
         } else {        
-            wp_set_object_terms($post_id, 'stock_image', 'product_type');		
+            wp_set_object_terms($post_id, 'stock_image', 'product_type');
+            update_post_meta($post_id, 'grfx_finish_product_type', false);
         }
 	}
 
