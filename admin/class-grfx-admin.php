@@ -337,6 +337,9 @@ class grfx_Admin {
 	 */
 	public function has_ftp_uploads(){
 		
+        if(!is_admin())
+            return false;
+        
 		$uploads = array();
 
 		$user_upload_folder = trailingslashit(grfx_ftp_dir().get_current_user_id());
@@ -350,7 +353,7 @@ class grfx_Admin {
 
 		if ( $files ) {
 			foreach ( $files as $file ) {
-				if ( $file == '.' || $file == '..' || $file == '.htaccess' )
+				if ( $file == '.' || $file == '..' || $file == '.htaccess' || $file == '.ftpquota' )
 					continue;
 				array_push( $uploads, $file );
 			}
@@ -383,7 +386,7 @@ class grfx_Admin {
 
 		if ( $files ) {
 			foreach ( $files as $file ) {
-				if ( $file == '.' || $file == '..' || $file == '.htaccess' )
+				if ( $file == '.' || $file == '..' || $file == '.htaccess' || $file == '.ftpquota' )
 					continue;
 				array_push( $uploads, $file );
 			}

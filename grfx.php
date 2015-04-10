@@ -7,24 +7,25 @@
  * @package   grfx
  * @author    Leo Blanchette <clipartillustration.com@gmail.com>
  * @license   GPL-2.0+
- * @link      http://www.grfx.com
+ * @link      http://www.grfx.co
  * @copyright 2014 Leo Blanchette
  *
  * @wordpress-plugin
- * Plugin Name:       grfx
- * Plugin URI:        http://www.grfx.com
- * Description:       grfx Core - Core functionality of the grfx system.
- * Version: 1.1.22
+ * Plugin Name:       grfx stock graphics authoring tool.
+ * Plugin URI:        http://www.grfx.co
+ * Description:       grfx Core - Core functionality of the grfx system. grfx is a stock illustration authoring tool for graphic artists and illustrators. 
+ * Version: 1.1.23
  * Author:            Leo Blanchette
  * Author URI:        
  * Text Domain:  grfx
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:       /languages
- * GitHub Plugin URI: 
+ * GitHub Plugin URI: https://github.com/orangeman555/grfx
  */
 
-define('grfx_version', '1.1.22');
+define('grfx_version', '1.1.23');
+
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

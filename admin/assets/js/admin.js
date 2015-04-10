@@ -2,6 +2,13 @@
     "use strict";
 
     $(function () {
+        
+        //get rid of annoying upgrade and pro notices
+        if ( $( 'a[href^="admin.php?page=metaslider-go-pro"]' ).length ) {
+            $('a[href^="admin.php?page=metaslider-go-pro"]').parent().remove();
+        }
+        
+        
         $(".grfx-uploader-cron, .grfx-ftp").click(function () {
             $(this).select();
         });
@@ -45,6 +52,8 @@
 
             //Open the uploader dialog
             custom_uploader.open();
+            
+          
             
         });  
     });

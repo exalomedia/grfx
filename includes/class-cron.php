@@ -212,7 +212,7 @@ class grfx_Cron {
 
 		if ( $files ) {
 			foreach ( $files as $file ) {
-				if ( $file == '.' || $file == '..' || $file == '.htaccess' )
+				if ( $file == '.' || $file == '..' || $file == '.htaccess' || $file == '.ftpquota' )
 					continue;
 				array_push( $uploads, $file );
 			}

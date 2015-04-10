@@ -133,6 +133,13 @@ class grfx_Upload_Tracker {
 	 * If user has FTP'd anything, this directive is run on an admin page load
 	 */
 	function prepare_file_from_ftp(){
+        
+        global $grfx_SITE_ID;
+        
+        $this->user_id = get_current_user_id();
+        $this->site_id = $grfx_SITE_ID;
+        
+        
 		$ftpdir = trailingslashit(grfx_ftp_dir().get_current_user_id());
 		
 		rename($ftpdir.$this->original_name, grfx_protected_uploads_dir().$this->file_name);
@@ -287,7 +294,7 @@ class grfx_Upload_Tracker {
 			$file = grfx_protected_uploads_dir() . $u;
 
 			if ( !in_array( $u, $database_uploads ) ) {
-				if ( $u == '.' || $u == '..' || $u == '.htaccess' )
+				if ( $u == '.' || $u == '..' || $u == '.htaccess' || $u == '.ftpquota' )
 					continue;
 				unlink( $file );
 			}
@@ -358,7 +365,7 @@ class grfx_Upload_Tracker {
 			)
 		);
 		
-		grfx_test_writer('test.txt', $wpdb->last_query);
+		//grfx_test_writer('test.txt', $wpdb->last_query);
 		
 	}
 

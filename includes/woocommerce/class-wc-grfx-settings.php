@@ -333,9 +333,9 @@ if(defined('GRFX_GETTING_INFO'))
         woocommerce_update_options( self::get_settings() );
 		
 		if(isset($_POST['grfx_watermark_image_id'])){
-			if(!is_numeric( $_POST['grfx_watermark_image_id']))
-				return;
-			update_option('grfx_watermark_image_id', $_POST['grfx_watermark_image_id']);
+			if(is_numeric( $_POST['grfx_watermark_image_id'])){				
+                update_option('grfx_watermark_image_id', $_POST['grfx_watermark_image_id']);
+            }
 		}
 		
 		
@@ -345,10 +345,15 @@ if(defined('GRFX_GETTING_INFO'))
 			$name = 'grfx_license_name_'.$i;
 			$text = 'grfx_license_text_'.$i;
 			
-			if( !empty( $_POST[$name] ) && !empty( $_POST[ $text ] ) ){
-				update_option( 'grfx_license_name_'.$i, $_POST[$name] );
+			if( !empty( $_POST[ $text ] ) ){
+		
 				update_option( 'grfx_license_text_'.$i, $_POST[$text] );
-			}			
+                
+			}	
+            
+			if( !empty( $_POST[$name] ) ){
+				update_option( 'grfx_license_name_'.$i, $_POST[$name] );
+			}	            
 			$i++;
 		}	
 		

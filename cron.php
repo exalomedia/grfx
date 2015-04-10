@@ -35,7 +35,7 @@ $files = scandir( dirname( __FILE__ ) . '/../../uploads/grfx_uploads/protected/'
 
 if ( $files ) {
 	foreach ( $files as $file ) {
-		if ( $file == '.' || $file == '..' || $file == '.htaccess' )
+		if ( $file == '.' || $file == '..' || $file == '.htaccess' || $file == '.ftpquota' )
 			continue;
 		array_push( $uploads, $file );
 	}
