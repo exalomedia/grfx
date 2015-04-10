@@ -254,9 +254,12 @@ class grfx_Product_Creator {
 	 * Simply creates an initial product upon which all the other data will be inserted.
 	 */
 	public function create_initial_product() {
-				
-		define('GRFX_CREATING_PRODUCT', true);
+
+        
+        if(!defined('GRFX_CREATING_PRODUCT'))
+            define('GRFX_CREATING_PRODUCT', true);
 		
+
 		$post = array(
 			'post_author' => $this->user_id,
 			'post_content' => $this->product_description,
@@ -274,9 +277,18 @@ class grfx_Product_Creator {
 			//$attach_id = get_post_meta( $product->parent_id, "_thumbnail_id", true );
 			//add_post_meta( $post_id, '_thumbnail_id', $attach_id );
 		}
-		wp_set_object_terms($post_id, $this->product_tags, 'product_tag');
-		wp_set_object_terms($post_id, 'stock_image', 'product_type');		
-		
+        
+        if(!taxonomy_exists('product_tag')){
+            update_post_meta($post_id, 'grfx_finish_product_tag', $this->product_tags);
+        } else {
+            wp_set_object_terms($post_id, $this->product_tags, 'product_tag');
+        }
+       
+        if(!taxonomy_exists('product_type')){
+            update_post_meta($post_id, 'grfx_finish_product_type', 'stock_image');
+        } else {        
+            wp_set_object_terms($post_id, 'stock_image', 'product_type');		
+        }
 	}
 
 	/**

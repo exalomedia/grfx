@@ -685,6 +685,51 @@ function grfx_append_license($title, $cart_item, $cart_item_key ){
 
 
 
+add_action('the_post', 'grfx_correct_object_terms');
+
+
+/**
+ * Repairs incomplete object terms, such as assigning the product type as a stock image, or the product
+ * tags. This happens during cron jobs due to limitations in wordpress, where taxonomies are not loaded
+ * properly in a multisite environment. If taxonomies are not available, they are staged in post meta
+ * and retrieved and fixed on first load. Post meta is deleted, and performance restored.
+ * 
+ * @global type $post
+ */
+function grfx_correct_object_terms(){
+    global $post;
+    
+    if(!is_multisite())
+        return;
+    
+    $post_id = get_the_id();
+    
+    $tags = get_post_meta($post_id, 'grfx_finish_product_tag', false);
+    
+    if($tags){
+        wp_set_object_terms($post_id, $tags[0], 'product_tag');
+        delete_post_meta($post_id, 'grfx_finish_product_tag');
+    }
+    
+    $type = get_post_meta($post_id, 'grfx_finish_product_type', false);
+    
+    if($type){
+        wp_set_object_terms($post_id, $type[0], 'product_type');
+        delete_post_meta($post_id, 'grfx_finish_product_type');
+    }    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
 
 
 //TESTING

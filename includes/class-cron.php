@@ -149,7 +149,7 @@ class grfx_Cron {
 				
 				$product->prepare_from_upload($upload_info);				
 				
-				$product->make_stock_image_basic($upload_info);
+				$product->make_stock_image_basic($upload_info, true);
 				
 				//cleanup
 				unset($product);

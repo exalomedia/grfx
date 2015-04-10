@@ -127,7 +127,13 @@ class grfx_Admin {
 	}
 
 	public function set_cookies() {
-		global $grfx_SITE_ID;
+		
+        $screen = get_current_screen();
+
+		if ( $screen->id != 'product_page_grfx_uploader' )
+            return;
+        
+        global $grfx_SITE_ID;
 
 		//set grfx user ID cookie
 		if ( !isset( $_COOKIE['grfx-user-id'] ) ) {
