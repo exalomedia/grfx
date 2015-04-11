@@ -1,3 +1,5 @@
+[DOWNLOAD HERE: grfx.zip - Wordpress plugin](https://www.dropbox.com/s/0z8tv5xjd4z4rbv/grfx.zip?dl=0 "grfx.zip - Wordpress plugin") (do not use github's master.zip for direct installation)
+
 # grfx (graphics) - the Illustrator's Stock Image Authoring Tool
 
  - **grfx** is a specialized open source tool for illustrators and graphic artists to independently publish stock images.
@@ -89,3 +91,4 @@ Curious what the heck we are talking about? http://codex.wordpress.org/Create_A_
 **grfx** is layed out and commented as well as possible to help you expand and improve our system. You are very essential to our develpment. Please join the github project and make contributions, file bug reports, and do developer stuff! 
 
 **Want to see the code docs?** They are here: http://grfx.co/docs/
+
