@@ -57,6 +57,13 @@ class grfx_Admin {
 		  return;
 		  } */
 
+        /*
+                  * Some environments are funky. This is a bit of a hack. 
+                  */
+		if(!function_exists("get_current_screen")){
+ 			require_once(ABSPATH . 'wp-admin/includes/screen.php');		
+		}        
+        
 		/*
 		 * Call $plugin_slug from public plugin class.
 		 */
