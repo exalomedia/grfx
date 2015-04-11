@@ -127,6 +127,51 @@ function grfx_clean_tmp_dir(){
 	}
 }
 
+
+/**
+ * Determins which files are available for download on a given product. This is primarily used 
+ * on the product page when setting up the price/product table. 
+ * 
+ * @subpackage HelperFunctions
+ * 
+ * @param int $site which site is in question   
+ * @param int $user which user owns the file
+ * @param int $fileid id of the file
+ * @return array file extensions available
+ */
+function grfx_downloads_available($site, $user, $fileid){
+    //get available file types
+    global $grfx_file_type_key;
+    
+    //establish base name of download file (without extension)
+    $filename_base = grfx_product_dir().$site.'-'.$user.'-'.$fileid;
+    
+    $extensions_to_check = array();
+        
+    $types = array();
+    
+    
+    foreach($grfx_file_type_key as $key=>$type)
+        $types[$key] = $type['extension'];
+    
+    foreach($types as $ext=>$type){
+        $extensions = explode(' ', $type);
+        foreach($extensions as $filetype){
+            array_push($extensions_to_check, array($ext,$filetype));
+        }
+    }
+             
+    $available = array();
+
+    foreach($extensions_to_check as $extension){
+        if(file_exists($filename_base.'.'.$extension[1])){
+                array_push($available, $extension[0]);
+        }
+    }
+
+    return $available;
+}
+
 /**
  * Scales image to desired size based on longest dimension. This is only for preview purposes - 
  * it does not actually scale an image. Since images are resized on delivery (saving storage) 

@@ -91,4 +91,3 @@ Curious what the heck we are talking about? http://codex.wordpress.org/Create_A_
 **grfx** is layed out and commented as well as possible to help you expand and improve our system. You are very essential to our develpment. Please join the github project and make contributions, file bug reports, and do developer stuff! 
 
 **Want to see the code docs?** They are here: http://grfx.co/docs/
-

@@ -248,13 +248,16 @@ function render_option_table(){
 
 	global $grfx_size_default_names;	
 	global $product;
-
+    global $grfx_SITE_ID;
+    
 	if($product->product_type != 'stock_image')
 		return;
 
 	//have filetypes ready
 	$filetypes = grfx_filetypes();
 	
+    $available = grfx_downloads_available($grfx_SITE_ID, (int) $product->post->post_author, $product->id );
+    
 	$i=1;
 	?>
 		<select id="grfx-product-option" name="grfx-product-option">
@@ -264,11 +267,15 @@ function render_option_table(){
 			 * If size not enabled, skip.
 			 */
 			$size_jpeg_enabled = '_size_enabled_'.$i;
-		
-			if(! (int) $product->$size_jpeg_enabled){
+            $type         = '_size_type_enabled_'.$i;
+            
+			if(! (int) $product->$size_jpeg_enabled || !in_array($product->$type, $available)){
 				$i++;
 				continue;
-			}				
+			}	
+            
+                  
+            
 			$size_name    = get_option('_size_name_'.$i, __('Size '.$i, 'grfx'));
 			$size_price  = '_size_price_'.$i;
 			$size_pixels = '_size_pixels_'.$i;
@@ -284,8 +291,9 @@ function render_option_table(){
 			 * If size not enabled, skip.
 			 */
 			$size_jpeg_enabled = '_size_enabled_'.$i;
-		
-			if(! (int) $product->$size_jpeg_enabled){
+            $type         = '_size_type_enabled_'.$i;
+            
+			if(! (int) $product->$size_jpeg_enabled  || !in_array($product->$type, $available)){
 				$i++;
 				continue;
 			}
@@ -294,7 +302,7 @@ function render_option_table(){
 			$size_license = '_size_license_'.$i;	
 			$size_pixels  = '_size_pixels_'.$i;			
 			$size_calculated = grfx_scaled_image_size($product->_size_x, $product->_size_y, $product->$size_pixels);
-			$type         = '_size_type_enabled_'.$i;
+			
 			?>
 			<div class="grfx-options-descriptions <?php echo $i==1?'show':'' ?>" id="grfx-option-description-<?php echo $i ?>">
 				
@@ -311,7 +319,7 @@ function render_option_table(){
 				
 				<span class="grfx-option-label"><?php _e('Pixels', 'grfx') ?>: </span>
 					<span class="grfx-size-info-option"><?php echo $size_calculated['html']; ?></span><br />					
-			
+               
 				<span class="grfx-option-label"><?php _e('Filetype', 'grfx') ?>: </span>
 					<span class="grfx-size-info-option"><?php echo $filetypes[$product->$type]; ?></span>	
 					
@@ -779,13 +787,13 @@ function grfx_filter_test($price, $product){
 }
 
 
-add_action('woocommerce_before_main_content', 'grfx_test');
+//add_action('woocommerce_before_main_content', 'grfx_test');
 function grfx_test(){
     //var_dump(the_post());
     $id = get_the_id();
 	
 		
-	return;
+
 
 	global $woocommerce;
 	//var_dump($price, $woocommerce->cart);
