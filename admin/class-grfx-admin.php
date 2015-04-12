@@ -57,13 +57,6 @@ class grfx_Admin {
 		  return;
 		  } */
 
-        /*
-                  * Some environments are funky. This is a bit of a hack. 
-                  */
-		if(!function_exists("get_current_screen")){
- 			require_once(ABSPATH . 'wp-admin/includes/screen.php');		
-		}        
-        
 		/*
 		 * Call $plugin_slug from public plugin class.
 		 */
@@ -135,9 +128,7 @@ class grfx_Admin {
 
 	public function set_cookies() {
 		
-        $screen = get_current_screen();
-
-		if ( $screen->id != 'product_page_grfx_uploader' )
+		if ( isset( $_GET['page'] ) && $_GET['page'] != 'grfx_uploader'  )
             return;
         
         global $grfx_SITE_ID;
@@ -166,9 +157,7 @@ class grfx_Admin {
 			return;
 		}
 
-		$screen = get_current_screen();
-
-		if ( $screen->id == 'product_page_grfx_uploader' ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == 'grfx_uploader' ) {
 			wp_enqueue_style( $this->plugin_slug . '-admin-styles-plupload-styles-queue', grfx_plugin_dir() . 'admin/includes/uploader/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css', array(), grfx::VERSION );
 		}
 
@@ -188,9 +177,8 @@ class grfx_Admin {
 			return;
 		}
 
-		$screen = get_current_screen();
 
-		if ( $screen->id == 'woocommerce_page_wc-settings' ) {
+		if ( isset($_GET['tab'] ) && $_GET['tab'] == 'settings_grfx' ) {
 			
 			wp_enqueue_media();			
 			//get necessary jquery UI elements
@@ -201,7 +189,7 @@ class grfx_Admin {
 			
 		}
 		
-		if ( $screen->id == 'product_page_grfx_uploader' ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == 'grfx_uploader' ) {
 
 			//get plupload                    
 			wp_enqueue_script( $this->plugin_slug . '-admin-script-uploader', grfx_plugin_dir() . 'admin/includes/uploader/plupload/js/plupload.full.min.js', array( 'jquery' ), grfx::VERSION );

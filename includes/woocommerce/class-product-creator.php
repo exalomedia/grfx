@@ -56,6 +56,12 @@ class grfx_Product_Creator {
 	 */
 	public $product_tags = array();
 
+    /**
+         * Product tags as a string
+         * @var string 
+         */
+    public $product_tags_string = '';
+    
 	/**
 	 * Product meta which will define the product's attributes such as price and downloads
 	 * 
@@ -278,19 +284,14 @@ class grfx_Product_Creator {
 			//add_post_meta( $post_id, '_thumbnail_id', $attach_id );
 		}
         
-        if(!taxonomy_exists('product_tag')){
-            update_post_meta($post_id, 'grfx_finish_product_tag', $this->product_tags);
-        } else {
-            wp_set_object_terms($post_id, $this->product_tags, 'product_tag');
-            update_post_meta($post_id, 'grfx_finish_product_tag', false);
-        }
-       
-        if(!taxonomy_exists('product_type')){
-            update_post_meta($post_id, 'grfx_finish_product_type', 'stock_image');
-        } else {        
-            wp_set_object_terms($post_id, 'stock_image', 'product_type');
-            update_post_meta($post_id, 'grfx_finish_product_type', false);
-        }
+         /*
+                    * This is updated via post meta instead of setting the terms directly due to wordpress's 
+                    * system. In a cron job such as this where the environment is loaded artificially, the taxonomies do not register properly.
+                    */
+        update_post_meta($post_id, 'grfx_finish_product_tag', $this->product_tags);
+      
+        update_post_meta($post_id, 'grfx_finish_product_type', 'stock_image');
+ 
 	}
 
 	/**
@@ -320,8 +321,9 @@ class grfx_Product_Creator {
 				!empty( $metadata->Title )    ? $this->product_title = $metadata->Title         : $this->product_title = '-';
 				!empty( $metadata->Description )  ? $this->product_description = $metadata->Description : $this->product_description = '-';
 				!empty( $metadata->Keywords ) ? $this->product_tags = $metadata->Keywords       : $this->product_tags = array();
-
-				$this->set_stock_image_data();
+                !empty( $metadata->Keywords ) && is_array( $metadata->Keywords ) ? $this->product_tags_string = implode(',',$metadata->Keywords)       : $this->product_tags_string = '';
+				
+                $this->set_stock_image_data();
 				
 				//Make various image sizes			
 
@@ -467,7 +469,12 @@ class grfx_Product_Creator {
 		}		
 	
 	
-		
+		/*
+                  * Other Reference
+                  */
+        $this->set_to_meta( 'grfx_site_id', $this->site_id );
+        $this->set_to_meta( 'grfx_meta_tags', $this->product_tags_string );
+        $this->set_to_meta( 'grfx_author_id', $this->user_id );
 	}
 
 	/**
