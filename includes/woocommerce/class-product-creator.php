@@ -191,6 +191,8 @@ class grfx_Product_Creator {
 	 */
 	public function make_stock_image_basic($info = false, $from_queue = true){
 
+            $this->user_id = $info->user_id;
+            $this->site_id = $info->site_id;
 			//log entry for deletion after process is over.
 			array_push($this->to_delete, $info->upload_id);
 		
