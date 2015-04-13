@@ -154,7 +154,7 @@ class grfx_Upload_Tracker {
 	 */
 	public function get_uploads($limit = 100){
 		global $wpdb;		
-		$sql = 'SELECT * FROM grfx_upload_tracking ORDER BY datetime ASC LIMIT '.$limit;
+		$sql = 'SELECT * FROM grfx_upload_tracking WHERE enqueued = 1 ORDER BY datetime ASC LIMIT '.$limit;
 		$uploads = $wpdb->get_results($sql);		
 		return $uploads;
 	}
@@ -365,6 +365,8 @@ class grfx_Upload_Tracker {
 			)
 		);
 		
+        $tmp = grfx_tmp_dir();
+        file_put_contents($tmp.'filesum', '0');
 		//grfx_test_writer('test.txt', $wpdb->last_query);
 		
 	}
@@ -514,13 +516,24 @@ class grfx_Upload_Tracker {
 	 */
 	public function delete_selected( $ids, $user_id, $blog_id ) {
 		global $wpdb;
-
-		$ids = implode( ', ', array_filter( $ids ) );
-
-		$sql = "SELECT * FROM grfx_upload_tracking WHERE user_id = $user_id AND site_id = $blog_id AND upload_id IN ($ids)";
-		
+        global $grfx_SITE_ID;
+        
+        $cleaned_ids = array();
+        
+        foreach($ids as $id){ 
+   
+            if(empty($id))
+                continue;
+            if(is_numeric($id))
+                array_push($cleaned_ids, $id);            
+        }                  
+        
+		$ids = implode( ', ', $cleaned_ids );
+        
+		$sql = "SELECT * FROM grfx_upload_tracking WHERE user_id = $user_id AND site_id = $grfx_SITE_ID AND upload_id IN ($ids)";
+		        
 		$uploads = $wpdb->get_results( $sql, OBJECT );
-
+        
 		foreach ( $uploads as $upload ) {
 
 			$file = $upload->file_name;
@@ -528,6 +541,8 @@ class grfx_Upload_Tracker {
 
 			$sql = "DELETE FROM grfx_upload_tracking WHERE upload_id = $db_id;";
 
+
+            
 			$wpdb->query( $sql );
 
 			if ( file_exists( grfx_protected_uploads_dir() . $file ) && !is_dir( grfx_protected_uploads_dir() . $file ) ) {

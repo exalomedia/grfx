@@ -113,7 +113,7 @@ class grfx_Cron {
 
 		$upload_tracker = new grfx_Upload_Tracker();
 
-		$uploads = $upload_tracker->get_uploads( 150 );
+		$uploads = $upload_tracker->get_uploads( 5000 );
 
 		if ( $uploads ) {
 			foreach ( $uploads as $upload_info ) {
@@ -122,12 +122,9 @@ class grfx_Cron {
 					return false;
 				}
 
-				if(exif_imagetype( grfx_protected_uploads_dir() . $upload_info->file_name ) != IMAGETYPE_JPEG ){
+				if( file_exists(grfx_protected_uploads_dir() . $upload_info->file_name) && exif_imagetype( grfx_protected_uploads_dir() . $upload_info->file_name ) != IMAGETYPE_JPEG ){
 					continue;
 				}
-
-				if(!$upload_info->enqueued)
-					continue;
 			
 				//uncomment for testing -- simulates timely operations	
 				//sleep(2);
