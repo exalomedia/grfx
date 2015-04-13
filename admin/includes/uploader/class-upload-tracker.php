@@ -158,7 +158,21 @@ class grfx_Upload_Tracker {
 		$uploads = $wpdb->get_results($sql);		
 		return $uploads;
 	}
+    
+	/**
+	 *  This gets uploads whether or not they are queued.
+	 * @global object $wpdb
+	 * @param  int $limit amount of uploads we wish to process
+	 * @return array|bool the uploads or false if none
+	 */    
+	public function get_uploads_queued_or_not($limit = 100){
+		global $wpdb;		
+		$sql = 'SELECT * FROM grfx_upload_tracking ORDER BY datetime ASC LIMIT '.$limit;
+		$uploads = $wpdb->get_results($sql);		
+		return $uploads;
+	}    
 	
+    
 	/**
 	 * Records upload to database.
 	 * @return type
@@ -277,6 +291,8 @@ class grfx_Upload_Tracker {
 	public function clean_uploads_dir() {
 		global $wpdb;
 
+        global $grfx_SITE_ID;
+        
 		$uploads = scandir( grfx_protected_uploads_dir(), 1 );
 
 		$files = implode( '%" OR file_name LIKE "%', $uploads );
@@ -299,6 +315,22 @@ class grfx_Upload_Tracker {
 				unlink( $file );
 			}
 		}
+        
+        if(function_exists('get_current_user_id')){
+            $this->blog_id = $grfx_SITE_ID;
+            $this->user_id = get_current_user_id();
+        } else {
+            return;
+        }
+        
+        $db_entries = $this->get_uploads_queued_or_not(1000);
+                    
+        foreach($db_entries as $dbu){
+            if(!file_exists(grfx_protected_uploads_dir() . $dbu->file_name)){
+                $this->delete_selected( array($dbu->upload_id), $this->user_id, $this->blog_id );
+            }
+        }
+        
 	}
 
 	/**
