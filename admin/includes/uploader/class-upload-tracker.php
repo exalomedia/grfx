@@ -178,6 +178,12 @@ class grfx_Upload_Tracker {
 	 * @return type
 	 */
 	public function log_upload() {
+        
+        if(isset($grfx_SITE_ID) && function_exists('get_current_user_id')){
+            global $grfx_SITE_ID;
+            $this->blog_id = $grfx_SITE_ID;
+            $this->user_id = get_current_user_id();
+        }
 		// Create connection
 		$conn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
 		// Check connection

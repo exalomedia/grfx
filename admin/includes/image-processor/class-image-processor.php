@@ -163,6 +163,8 @@ class grfx_Image_Processor {
 		if ( grfx_use_imagick() ) {
 			
 			$image = new Imagick();
+			if(!file_exists($this->filename))
+				return false;            
 			$image->readImage( $src );
 			$image->scaleImage( $px, $px, true );
 
@@ -226,6 +228,8 @@ class grfx_Image_Processor {
 		if ( grfx_use_imagick() ) {
 
 			$image = new Imagick();
+			if(!file_exists($this->filename))
+				return false;
 			$image->readImage( $this->filename );
 			$image->scaleImage( 800, 800, true );
 
@@ -316,6 +320,8 @@ class grfx_Image_Processor {
 		if ( grfx_use_imagick() ) {
 
 			$image = new Imagick();
+			if(!file_exists($this->filename))
+				return false;            
 			$image->readImage( $this->filename );
 			$image->scaleImage( $s, $s, true );
 

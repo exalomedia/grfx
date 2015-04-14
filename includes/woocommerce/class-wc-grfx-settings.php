@@ -256,17 +256,39 @@ class WC_Settings_grfx {
 			
 			$name = get_option( 'grfx_license_name_'.$i, false );
 			$text = get_option( 'grfx_license_text_'.$i, false );
+            
+            if($i == 1 && (!$text || empty($text))){
+                
+                $home = trim(home_url(), '/');
+                
+                if (!preg_match('#^http(s)?://#', $home)) {
+                     $home = 'http://' . $home;
+                }  
+                
+                $urlParts = parse_url($home);
+                $home = preg_replace('/^www\./', '', $urlParts['host']);
+                
+                $text = file_get_contents(grfx_core_plugin.'includes/templates/license.txt');
+                
+                $text = str_replace('#SITE#', $home, $text);
+
+            }
+            
+            if($i == 1 && (!$name || empty($name))){
+                $name = __('End User License Agreement', 'grfx');
+            }
+            
 			?>
 			
 			<h3><?php _e('License ', 'grfx') ?> #<?php echo $i; ?></h3>			
 			<div class="grfx-license-settings">				
 				<?php _e('License Name', 'grfx'); ?> #<?php echo $i; ?><br />				
 				<label for="grfx_license_name_<?php echo $i ?>">					
-					<input type="text" class="grfx-license-name" id="grfx_license_name_<?php echo $i ?>" name="grfx_license_name_<?php echo $i ?>" value="<?php echo $name ?>" />					
+					<input type="text" class="grfx-license-name" id="grfx_license_name_<?php echo $i ?>" name="grfx_license_name_<?php echo $i ?>" value="<?php echo stripslashes($name) ?>" />					
 				</label>	
 				<br /><br />
 				<?php
-				wp_editor( $text, 'grfx_license_text_'.$i, $settings = array('media_buttons'=>false,'teeny'=>true) );
+				wp_editor( stripslashes($text), 'grfx_license_text_'.$i, $settings = array('media_buttons'=>false,'teeny'=>true) );
 				?>				
 			</div>
 			<?php			
@@ -345,13 +367,13 @@ if(defined('GRFX_GETTING_INFO'))
 			$name = 'grfx_license_name_'.$i;
 			$text = 'grfx_license_text_'.$i;
 			
-			if( !empty( $_POST[ $text ] ) ){
+			if( isset( $_POST[ $text ] ) ){
 		
 				update_option( 'grfx_license_text_'.$i, $_POST[$text] );
                 
 			}	
             
-			if( !empty( $_POST[$name] ) ){
+			if( isset( $_POST[$name] ) ){
 				update_option( 'grfx_license_name_'.$i, $_POST[$name] );
 			}	            
 			$i++;

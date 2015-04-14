@@ -399,12 +399,21 @@ class grfx_Admin {
 			}
 		}
 		
-		
+		/*
+                 * We only add files over two minutes old (to ensure nothing is swiped during upload)
+                 */
 		foreach($uploads as $file){
 			
-			$tracker = new grfx_Upload_Tracker($file);
+            if (time()-filemtime($file) > 3 * 60) {        
+                //file is over two minutes old...
+                $tracker = new grfx_Upload_Tracker($file);
+
+                $tracker->prepare_file_from_ftp();
+            } else {
+              return;
+            }            
+            
 	
-			$tracker->prepare_file_from_ftp();
 			
 		}
 		

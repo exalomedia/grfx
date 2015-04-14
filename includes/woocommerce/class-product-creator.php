@@ -267,6 +267,10 @@ class grfx_Product_Creator {
         if(!defined('GRFX_CREATING_PRODUCT'))
             define('GRFX_CREATING_PRODUCT', true);
 		
+        if(!file_exists($this->file_name)){
+            $this->file_name;
+            return false;
+        }
 
 		$post = array(
 			'post_author' => $this->user_id,
@@ -330,10 +334,16 @@ class grfx_Product_Creator {
 				//Make various image sizes			
 
 				$image_processor->filename = $this->file_name;
-				$image_processor->make_standard_preview();
-				$image_processor->make_minipic_preview($this->user_id);
+				$success = $image_processor->make_standard_preview();
+                
+                if(!$success)
+                    return false;
+                
+				$success = $image_processor->make_minipic_preview($this->user_id);
 							
-				
+				if(!$success)
+                    return false;
+                
 				break;
 		}
 	}

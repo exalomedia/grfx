@@ -168,10 +168,10 @@ class grfx_Cron {
 		 * resize) does not run over time. Its a time safety strategy.
 		 */
 		
-		if ( $elapsed_time > $this->server_time_limit - 10 )
+		if ( $elapsed_time > $this->server_time_limit - 15 )
 			return true;
 
-		if ( $elapsed_time > $this->running_time_limit - 10 )
+		if ( $elapsed_time > $this->running_time_limit - 15 )
 			return true;
 		
 		return false;
