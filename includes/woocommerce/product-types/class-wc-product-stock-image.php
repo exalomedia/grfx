@@ -7,8 +7,6 @@
  * @subpackage grfx_Woocommerce
  */
 
-//NOTE THIS FILE IS MOSTLY EXPERIMENTAL IT WILL BE CLEANED UP LATER
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -502,7 +500,7 @@ function grfx_add_to_cart_button(){
 
 
 
-add_action( 'woocommerce_before_calculate_totals', 'grfx_add_custom_stock_image_price', 100);
+add_action( 'woocommerce_before_calculate_totals', 'grfx_add_custom_stock_image_price', 999);
 
 /**
  * This function changes the cart value according to the custom stock image size chosen. 
@@ -563,7 +561,7 @@ function grfx_add_custom_stock_image_price( $cart_object ) {
 }
 
 
-add_action('woocommerce_cart_item_price', 'grfx_add_custom_stock_image_price_minicart', 100, 3);
+add_action('woocommerce_cart_item_price', 'grfx_add_custom_stock_image_price_minicart', 100, 999);
 
 /**
  * Overrides the minicart price (without this function, the minicart shows the singular price for a singular product.

@@ -306,10 +306,15 @@ class grfx_Image_Processor {
 	/**
 	 * Creates a small minipic preview, slightly watermarked.
 	 */
-	public function make_minipic_preview($user, $s = 200 ) {
+	public function make_minipic_preview($user, $s = 275 ) {
 		
-		$current_user = get_userdata($user);
-		
+        $copyright = get_option('grfx_copyright', false);
+        
+        if(!$copyright){
+            $current_user = get_userdata($user);
+            $copyright = $current_user->display_name;
+        }
+        
 		$mime = $this->get_image_type( $this->filename );
 		
 		/*
@@ -341,34 +346,34 @@ class grfx_Image_Processor {
 			if ( $this->protect_minipics == true ) {
 
 				// Watermark text
-				$text = '© ' . $current_user->display_name;
+				$text = '© ' . stripslashes($copyright);
 
 				// Create a new drawing palette
 				$draw = new ImagickDraw();
 
 				// Set font properties
 				$draw->setFont( 'Bookman' );
-				$draw->setFontSize( 14 );
-				$draw->setFillColor( '#CCC' );
+				$draw->setFontSize( 24 );
+				$draw->setFillColor( '#EEE' );
 				$draw->setfillopacity( 0.50 );
 
 				// Position text at the bottom-right of the image
 				$draw->setGravity( Imagick::GRAVITY_SOUTH );
 
-				$y = 5;
+				$y = -20;
 				$o = 0.25;
 				while ( $y < $s ) {
 					// Draw text on the image
 					$draw->setfillopacity( $o );
 					$image->annotateImage( $draw, 0, $y, 0, $text );
-					$y = $y + 20;
-					$o = $o - .1;
+					$y = $y + 50;
+					$o = $o; // - .1
 				}
 			}
 
 			$image->writeImage( $this->tmp_dir . 'tmp-minipic' . $mime );
 			$image->clear();
-			$image->destroy();
+			$image->destroy();       
 		} else {
 
 

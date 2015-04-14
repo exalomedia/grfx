@@ -102,6 +102,7 @@ class grfx_Cron {
 		$this->cleanup();
 	}
 
+    
 	/**
 	 *  This is the main queue processing method. 
 	 * @global type $switched

@@ -236,6 +236,20 @@ class WC_Settings_grfx {
 			</label>	
 			
 		</div>
+
+        <?php         
+        $copyright = get_option('grfx_copyright', false); 
+        
+        if(!$copyright){
+            $current_user = get_userdata(get_current_user_id());
+            $copyright = $current_user->display_name;
+        }                
+        ?>
+        <hr />
+        <label for="grfx_copyright">
+            <strong><?php _e('Copyright text', 'grfx') ?></strong> <span class="description"> <?php _e('Used in the minipic watermark.', 'grfx') ?></span>
+            <br /><input id="grfx_copyright" name="grfx_copyright" type="text" value="<?php echo stripslashes($copyright) ?>" />
+        </label>
 		<?php
 		self::license_settings();
 	}
@@ -360,6 +374,8 @@ if(defined('GRFX_GETTING_INFO'))
             }
 		}
 		
+        if(isset($_POST['grfx_copyright']))
+            update_option('grfx_copyright', stripslashes($_POST['grfx_copyright']));
 		
 		$i=1;		
 		while($i <= 3){

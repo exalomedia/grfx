@@ -392,6 +392,18 @@ class grfx_Product_Creator {
 		if($size=='preview')
 			set_post_thumbnail( $this->post_id, $attach_id );
 		
+        
+        /*
+                  * Make custom minipic
+                  */
+        $dst = trailingslashit(ABSPATH).'wp-content/uploads/grfx_uploads/content/'
+                .$this->site_id.'-'.$this->user_id.'-'.$this->post_id.'-minipic.jpg';
+        
+        if(file_exists($tmp_dir.'tmp-minipic.jpeg')){
+            rename($tmp_dir.'tmp-minipic.jpeg', $dst);
+        } elseif (file_exists($tmp_dir.'tmp-minipic.jpg')){
+            rename($tmp_dir.'tmp-minipic.jpg', $dst);
+        }
 		
 	}
 	
@@ -593,12 +605,17 @@ class grfx_Product_Creator {
 				continue;
 			}
 			
+            if(!file_exists($file['file']))
+                continue;
+            
 			//change directory for downloadable file
 			
 			//file name convention: <site id>-<user id>-<post number> ( 2-3-9999.png )
 			$file_info    = pathinfo($file['file']);
 			$new_location = grfx_product_dir().$this->site_id.'-'.$this->user_id.'-'.$this->post_id.'.'.$file_info['extension'];
-			rename($file['file'], $new_location);
+			
+
+            rename($file['file'], $new_location);
 			
 			//change the location to be logged
 			$file['file']=$new_location;

@@ -65,7 +65,7 @@ class grfx {
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 		
 		//set up image sizes
-		add_action( 'init', array( $this, 'add_image_sizes' ) );
+		add_action( 'init', array( $this, 'add_image_sizes' ), 999 );
 		
 		// Activate plugin when new blog is added
 		add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );

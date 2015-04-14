@@ -135,19 +135,13 @@ class grfx_Admin {
 
 		//set grfx user ID cookie
         
-        if(isset($_COOKIE['grfx-user-id'])){
-            unset($_COOKIE['grfx-user-id']);
-            setcookie( 'grfx-user-id', null, time() - 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );
-        }
-		setcookie( 'grfx-user-id', 1, time() + 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );
-	
-        if(isset($_COOKIE['grfx-blog-id'])){
-            unset($_COOKIE['grfx-blog-id']);
-            setcookie( 'grfx-blog-id', null, time() - 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );
-        }
-		if ( !isset( $_COOKIE['grfx-blog-id'] ) || $_COOKIE['grfx-blog-id'] != $grfx_SITE_ID  ) {
-			setcookie( 'grfx-blog-id', $grfx_SITE_ID, time() + 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );
-		}
+
+        setcookie( 'grfx-user-id', null, time() -999999, COOKIEPATH, COOKIE_DOMAIN, false );
+		setcookie( 'grfx-user-id', 1, time() + 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );	
+
+        setcookie( 'grfx-blog-id', null, time()  -999999, COOKIEPATH, COOKIE_DOMAIN, false );  
+		setcookie( 'grfx-blog-id', $grfx_SITE_ID, time() + 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );
+		
 	}
 
 	/**
