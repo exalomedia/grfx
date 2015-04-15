@@ -594,7 +594,7 @@ function grfx_minicart_total($cart_subtotal, $compound, $cart){
     
 }
 
-add_action('woocommerce_cart_item_price', 'grfx_add_custom_stock_image_price_minicart', 100, 999);
+add_action('woocommerce_cart_item_price', 'grfx_add_custom_stock_image_price_minicart', 999, 3);
 
 /**
  * Overrides the minicart price (without this function, the minicart shows the singular price for a singular product.
@@ -737,10 +737,7 @@ add_action('the_post', 'grfx_correct_object_terms');
  */
 function grfx_correct_object_terms(){
     global $post;
-    
-    if(!is_multisite())
-        return;
-    
+        
     $post_id = get_the_id();
     
     $tags = get_post_meta($post_id, 'grfx_finish_product_tag', false);
@@ -753,9 +750,7 @@ function grfx_correct_object_terms(){
     
     if($type){
         wp_set_object_terms($post_id, $type[0], 'product_type');
-    }    
-    
-    
+    }   
     
 }
 
