@@ -24,6 +24,7 @@
  * GitHub Plugin URI: https://github.com/orangeman555/grfx
  */
 
+
 define('grfx_version', '1.1.35');
 
 
