@@ -594,7 +594,43 @@ function grfx_minicart_total($cart_subtotal, $compound, $cart){
     
 }
 
-add_action('woocommerce_cart_item_price', 'grfx_add_custom_stock_image_price_minicart', 999, 3);
+add_filter('woocommerce_cart_item_product', 'grfx_add_custom_stock_image_price_minicart_before', 1, 3);
+
+/**
+ * Overrides the minicart price (without this function, the minicart shows the singular price for a singular product.
+ * 
+ * This is run along with another filter grfx_add_custom_stock_image_price_minicart_before just to ensure
+ * that the price is over-ridden properly on display
+ * 
+ * @see grfx_add_custom_stock_image_price_minicart_before() 
+ * 
+ * @param type $price
+ * @param type $cart_item
+ * @param type $cart_item_key
+ * @return type
+ */
+function grfx_add_custom_stock_image_price_minicart_before($cart_item, $data, $cart_item_key ){
+	
+    
+    if($cart_item->product_type  != 'stock_image')
+		return $cart_item;
+	
+    
+    
+	$option = $data['grfx-product-option'];
+	
+	$price_key = '_size_price_'.$option;
+	    
+	$price = $cart_item->$price_key;
+			
+    $cart_item->price         = $price;
+    $cart_item->_price         = $price;
+    $cart_item->_regular_price = $price;
+    
+	return $cart_item;
+}
+
+add_action('woocommerce_cart_item_price', 'grfx_add_custom_stock_image_price_minicart_after', 999, 3);
 
 /**
  * Overrides the minicart price (without this function, the minicart shows the singular price for a singular product.
@@ -604,7 +640,7 @@ add_action('woocommerce_cart_item_price', 'grfx_add_custom_stock_image_price_min
  * @param type $cart_item_key
  * @return type
  */
-function grfx_add_custom_stock_image_price_minicart($price, $cart_item, $cart_item_key ){
+function grfx_add_custom_stock_image_price_minicart_after($price, $cart_item, $cart_item_key ){
 
 	if($cart_item['data']->product_type  != 'stock_image')
 		return $price;
@@ -614,7 +650,7 @@ function grfx_add_custom_stock_image_price_minicart($price, $cart_item, $cart_it
 	$price_key = '_size_price_'.$option;
 	
 	$price = $cart_item['data']->$price_key;
-			
+			        
 	return wc_price( $price );
 	
 }
