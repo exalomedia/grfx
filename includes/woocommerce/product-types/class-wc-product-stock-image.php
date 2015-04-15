@@ -167,7 +167,7 @@ function grfx_setup_wc_product_stock_image() {
 			
 			$this->get_stock_image_options();	
 			
-			add_action( 'woocommerce_before_calculate_totals', array( $this, 'set_custom_prices_before_calculate_totals' ) );
+			//add_action( 'woocommerce_before_calculate_totals', array( $this, 'set_custom_prices_before_calculate_totals' ) );
 						
 		}
 
@@ -561,6 +561,39 @@ function grfx_add_custom_stock_image_price( $cart_object ) {
 }
 
 
+add_action('woocommerce_cart_subtotal', 'grfx_minicart_total', 3, 90);
+
+/**
+ * Adjusts the total of the minicart price. 
+ * 
+ * Without this function it shows a messed up price because woocommerce does not directly recognize
+ * grfx image custom options. 
+ * @param type $cart_subtotal
+ * @param type $compound
+ * @param type $cart
+ * @return type
+ */
+function grfx_minicart_total($cart_subtotal, $compound, $cart){
+       
+    $the_total = 0;
+       //grfx-product-option-price
+    foreach($cart->cart_contents as $key => $item){
+        if(isset($item['grfx-product-option-price'])){
+
+            $option = $item['grfx-product-option-price'];
+            $the_total = $the_total + $option;
+        } else {
+            $option = $item['data']->price;
+            $the_total = $the_total + $option;
+        }
+    }
+    
+    $subtotal = wc_price( $the_total );
+    
+    return $subtotal;
+    
+}
+
 add_action('woocommerce_cart_item_price', 'grfx_add_custom_stock_image_price_minicart', 100, 999);
 
 /**
@@ -748,21 +781,6 @@ function grfx_test_add_item($data){
 	return $data;
 }
 
-
-
-//add_action( 'woocommerce_before_calculate_totals', 'grfx_add_custom_stock_image_price_2' );
-
-function grfx_add_custom_stock_image_price_2( $cart_object ) {
-
-    $target_product_id = $_POST[''];
-    foreach ( $cart_object->cart_contents as $key => $value ) {
-		var_dump($value);
-        if ( $value['product_id'] == $target_product_id ) {
-            $value['data']->price = $custom_price;
-        }
-    }
-	var_dump($cart_object->cart_contents );
-}
 
 
 //add_filter('woocommerce_get_price', 'grfx_filter_test', 10, 2);
