@@ -610,13 +610,10 @@ add_filter('woocommerce_cart_item_product', 'grfx_add_custom_stock_image_price_m
  * @return type
  */
 function grfx_add_custom_stock_image_price_minicart_before($cart_item, $data, $cart_item_key ){
-	
-    
+	    
     if($cart_item->product_type  != 'stock_image')
 		return $cart_item;
-	
-    
-    
+	        
 	$option = $data['grfx-product-option'];
 	
 	$price_key = '_size_price_'.$option;

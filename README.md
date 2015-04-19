@@ -11,7 +11,7 @@
 
 **grfx** can be used with any woocommerce compatible wordpress theme. Get one of those beautiful themes on http://www.themeforest.net and really wow your customers with your beautiful site and stock images for sale!
 
-Are you an illustrator or graphic artist? Have you ever heard of microstock? See more here: http://en.wikipedia.org/wiki/Microstock_photography
+Are you an illustrator or graphic artist? Have you ever heard of stock imaging? See more here: http://en.wikipedia.org/wiki/Stock_image
 
 # Installation Prerequisites 
 Since **grfx** is a wordpress plugin, dependent on woocommerce, do this first:

@@ -190,7 +190,10 @@ class grfx_Product_Creator {
 	 * @param bool $from_queue Whether or not this operation is from the queue. If so, it does cleanup.
 	 */
 	public function make_stock_image_basic($info = false, $from_queue = true){
-
+            
+            if(!file_exists(grfx_protected_uploads_dir() . $info->file_name))
+                return false;
+        
             $this->user_id = $info->user_id;
             $this->site_id = $info->site_id;
 			//log entry for deletion after process is over.
@@ -362,7 +365,7 @@ class grfx_Product_Creator {
 			$tmp_img = $tmp_img.'.jpg';			
 		} elseif (file_exists($tmp_dir.$tmp_img.'.jpeg')){
 			$tmp_img = $tmp_img.'.jpeg';	
-		}
+        } 
 		
 		$substitute = __('image', 'grfx'); //in case the file did not have meta data title
 		$file_title = empty($this->product_title) ? $substitute : $this->product_title;
