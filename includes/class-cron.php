@@ -167,6 +167,7 @@ class grfx_Cron {
         * @return boolean
         */
     public function site_exists($site_id){
+        return true;
         global $wpdb;
         $table_name = "wp_".$site_id."_options";
         if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
