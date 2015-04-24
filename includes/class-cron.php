@@ -135,6 +135,10 @@ class grfx_Cron {
 				 */
 				if ( is_multisite() ) {
 					global $switched;
+                       
+                    if(!$this->site_exists(get_current_blog_id()))
+                        continue;
+                    
 					if ( get_current_blog_id() != $upload_info->site_id ) {
 						switch_to_blog( $upload_info->site_id );
 					}
@@ -155,6 +159,23 @@ class grfx_Cron {
 		}
 	}
 
+    /**
+        * Check that a site does in fact exists. Stops a crash in the case of deleted tables. 
+        * 
+        * @global type $wpdb
+        * @param type $site_id
+        * @return boolean
+        */
+    public function site_exists($site_id){
+        global $wpdb;
+        $table_name = "wp_".$site_id."_options";
+        if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+            return false;
+        } else {
+            return true;
+        }               
+    }
+    
 	/**
 	 * Checks to see if script is reaching time limit.
 	 * @return boolean true if time limit reached, false if not.

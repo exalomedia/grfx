@@ -844,10 +844,10 @@ function grfx_test(){
 	
     
     $product = wc_get_product($id);    
-    var_dump($product);
-	return;
+
     $meta = get_post_meta($id);
 
+    var_dump($meta);
 	
 	var_dump($product);
 	
