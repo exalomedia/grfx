@@ -14,7 +14,7 @@
  * Plugin Name:       grfx stock graphics authoring tool.
  * Plugin URI:        http://www.grfx.co
  * Description:       grfx Core - Core functionality of the grfx system. grfx is a stock illustration authoring tool for graphic artists and illustrators. 
- * Version: 1.1.3967
+ * Version: 1.1.40
  * Author:            Leo Blanchette
  * Author URI:        
  * Text Domain:  grfx
@@ -24,7 +24,7 @@
  * GitHub Plugin URI: https://github.com/orangeman555/grfx
  */
 
-define('grfx_version', '1.1.397');
+define('grfx_version', '1.1.40');
 
 
 // If this file is called directly, abort.

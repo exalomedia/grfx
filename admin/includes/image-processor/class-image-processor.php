@@ -153,6 +153,8 @@ class grfx_Image_Processor {
 	 */
 	public function make_custom_size_image($src, $dst, $px) {
 		
+		$this->filename = $src;
+		
 		$mime = $this->get_image_type( $src );
 
 		/*
@@ -203,7 +205,7 @@ class grfx_Image_Processor {
 				$image->save( $dst . $mime );
 			}
 		}
-		
+	
 		return $dst . $mime;
 		
 	}
