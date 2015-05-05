@@ -82,8 +82,13 @@ class grfx {
 			grfx_set_sitepass();
 			$this->activate_exiftool();
 		}
-				
-		
+        
+        /*
+         * Preview image override
+         */
+        add_filter('single_product_large_thumbnail_size', array($this, 'preview_image'), 1);	
+        
+        
 		/* Define custom functionality.
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
@@ -92,6 +97,16 @@ class grfx {
 
 	}
 
+    /*
+     * Replaces the preview image on the main page with the proper grfx one.
+     */
+    public function preview_image($image_size){
+                    
+        return 'full';
+        
+    }
+    
+    
 	/**
 	 * Add image size particular to grfx
 	 */
