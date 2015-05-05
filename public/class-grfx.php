@@ -83,11 +83,9 @@ class grfx {
 			$this->activate_exiftool();
 		}
         
-        /*
-         * Preview image override
-         */
-        add_filter('single_product_large_thumbnail_size', array($this, 'preview_image'), 1);	
+        add_action('wp_head', array($this, 'preview_image_open_graph_data'));
         
+        add_filter('woocommerce_single_product_image_html', array($this, 'image_schema'));
         
 		/* Define custom functionality.
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
@@ -97,13 +95,135 @@ class grfx {
 
 	}
 
-    /*
-     * Replaces the preview image on the main page with the proper grfx one.
+    /**
+     * Handles open graph data for stock image product
+     * 
+     * @global type $product
+     * @return type
      */
-    public function preview_image($image_size){
-                    
-        return 'full';
+    public function preview_image_open_graph_data(){
+                       
+        if(!is_single())
+            return;        
         
+        global $post;
+        
+        if(!is_product())
+            return;
+        
+        $product = get_product($post->ID);        
+        
+        if( !$product->is_type( 'stock_image' ) )
+            return;
+        
+        $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );               
+        
+        $og = "\n<!-- grfx Open Graph Data -->";
+        
+        //IMAGE
+        $og .= "\n<meta property='og:image' content='".$url."' />";
+        
+        //TITLE
+        $og .= "\n<meta property='og:title' content='" . $post->post_title. ' ' . __(' - Stock Image:', 'grfx')."' />";
+        
+        //URL
+        $og .= "\n<meta property='og:url' content='" . get_the_permalink() ."' />";
+        
+        //TYPE
+        $og .= "\n<meta property='og:type' content='product.item' />";        
+        
+        //DESCRIPTION
+        $og .= "\n<meta property='og:description' content='".__('Stock image: ', 'grfx'). $post->post_title."' />";            
+        
+        $og .= "\n<!-- /grfx Open Graph Data -->\n";
+        echo $og;
+        
+    }
+    
+    /**
+     * Generates a special product image for grfx
+     * @global type $post
+     * @global type $woocommerce
+     * @global type $product
+     * @return type
+     */
+    public function generate_product_image(){
+        global $post, $woocommerce, $product;    
+        
+        $image_caption 	= get_post( get_post_thumbnail_id() )->post_excerpt;
+        $image_link  	= wp_get_attachment_url( get_post_thumbnail_id() );
+        $image       	= get_the_post_thumbnail( $post->ID, apply_filters( 'single_product_large_thumbnail_size', 'full' ), array(
+            'title'	=> $post->post_title,
+            'alt'	=> $post->post_title
+            ) 
+        );  
+
+        $attachment_count = count( $product->get_gallery_attachment_ids() );
+
+        if ( $attachment_count > 0 ) {
+            $gallery = '[product-gallery]';
+        } else {
+            $gallery = '';
+        }            
+        
+        $image_html = sprintf( '<a href="%s" class="woocommerce-main-image zoom" title="%s" data-rel="prettyPhoto' . $gallery . '">%s</a>', $image_link, $image_caption, $image );
+        
+        return $image_html;
+        
+    }
+    
+    /**
+     * Sets up a much-improved image and schema for visuals and SEO
+     * @global type $product
+     * @param type $image_html
+     * @return string
+     */
+    public function image_schema($image_html){
+        
+        $image_html = $this->generate_product_image();
+        
+        global $product;
+        
+        /**
+                  *  IMAGE
+                  */
+        $post_thumbnail_id = get_post_thumbnail_id();
+        $post_thumbnail_url = wp_get_attachment_url( $post_thumbnail_id );           
+        $this->image_url = $post_thumbnail_url;       
+        
+        
+        /**
+                  *  TAGS
+                  */        
+        $tags = strip_tags($product->get_tags( ', ', '', '' ));        
+
+        
+        $schema.='  <div itemscope itemtype="http://schema.org/ImageObject">'           ."\n";
+        
+        $schema.='      <meta itemprop="caption" content="'.get_the_title().'" />'      ."\n";
+        
+        $schema.='      <meta itemprop="contentUrl" content="'.$this->image_url.'" />'  ."\n";
+        
+        $schema.='      <meta itemprop="description" content="'.get_the_title().'" />'  ."\n";
+        
+        $schema.='      <meta itemprop="keywords" content="'.$tags.'" />'               ."\n";
+        
+        $schema.='      <meta itemprop="author" content="'.get_the_author().'" />'      ."\n";
+        
+        $schema.='      <meta itemprop="contributor" content="'.get_the_author().'" />' ."\n";
+        
+        $schema.='      <meta itemprop="creator" content="'.get_the_author().'" />'     ."\n";
+        
+        $schema.='      <meta itemprop="datePublished" content="'.get_the_date().'" />' ."\n";
+        
+        $schema.='      <meta itemprop="representativeOfPage" content="1" />'           ."\n";
+        
+        $schema.= str_replace('itemprop="image"', '', $image_html)."\n";
+        
+        $schema.='  </div>'."\n";
+        
+        
+        return $schema;
     }
     
     
