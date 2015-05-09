@@ -132,6 +132,7 @@ function grfx_clean_tmp_dir(){
  * Determins which files are available for download on a given product. This is primarily used 
  * on the product page when setting up the price/product table. 
  * 
+ * @package grfx
  * @subpackage HelperFunctions
  * 
  * @param int $site which site is in question   

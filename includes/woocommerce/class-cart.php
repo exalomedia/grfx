@@ -163,6 +163,13 @@ class grfx_Cart {
 	 */
 	public function get_file_path( $file_path, $product, $download_id ){
 		
+        /*
+         * A small fix, in case somebody has migrated - the filepath will have changed
+         * if their root directory changes
+         */
+		$path_parts = pathinfo($file_path);
+		$file_path = grfx_product_dir().$path_parts['basename'];           
+        
 		/**
 		 * This should only apply to stock images at present.
 		 */

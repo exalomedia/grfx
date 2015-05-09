@@ -11,12 +11,12 @@
  * @copyright 2014 Leo Blanchette
  *
  * @wordpress-plugin
- * Plugin Name:       grfx
+ * Plugin Name:       grfx stock graphics authoring tool.
  * Plugin URI:        http://www.grfx.co
  * Description:       grfx Core - Core functionality of the grfx system. grfx is a stock illustration authoring tool for graphic artists and illustrators. 
- * Version: 1.1.58
+ * Version: 1.1.22
  * Author:            Leo Blanchette
- * Author URI: http://www.grfx.co       
+ * Author URI:        
  * Text Domain:  grfx
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -24,8 +24,7 @@
  * GitHub Plugin URI: https://github.com/orangeman555/grfx
  */
 
-define('grfx_version', '1.1.58');
-
+define('grfx_version', '1.1.23');
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

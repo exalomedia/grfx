@@ -44,9 +44,22 @@
 			<strong><?php _e("Then, ", "grfx") ?></strong>
 				<a target="_blank" title="<?php _e("grfx Upload", "grfx") ?>" href="<?php echo admin_url('edit.php?post_type=product&page=grfx_uploader') ?>">
 					<?php _e("Start uploading!", "grfx") ?>
-				</a>	
+				</a><br />	<br />	
 		</li>		
 		
+        
+        <!-- STEP 4 -->
+        
+        <li>
+            <hr />
+            <p>
+            <?php
+            _e('Need help? Join the community at <strong><a href="http://community.grfx.co/">community.grfx.co/</a></strong>. We want your image-selling
+            start-up to be successful. We can help you get up and running plus give you pointers to getting your work exposure.', 'grfx');
+            ?>
+            </p>
+        </li>
+        
 	</ol>
 	
 </div>
