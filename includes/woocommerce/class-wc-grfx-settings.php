@@ -36,7 +36,7 @@ function grfx_stock_image_settings( $settings, $current_section ) {
 		   $grfx_size_default_prices, 
 		   $grfx_size_default_pixels, 
 		   $grfx_size_default_license, 
-		   $grfx_size_enabled_;
+		   $grfx_size_enabled;
 	
 	/**
 	 * Check the current section is what we want
@@ -72,7 +72,6 @@ function grfx_stock_image_settings( $settings, $current_section ) {
 
 		while($i <= count($grfx_size_default_names)){		
 			
-
 			/**
 			 * Size ENABLED
 			 */
@@ -81,7 +80,7 @@ function grfx_stock_image_settings( $settings, $current_section ) {
 				'name'     => $i.' '.__( 'Enabled', 'grfx' ),
 				'desc_tip' => __( '', 'grfx' ),				
 				'type'     => 'checkbox',							
-				'default'  => $grfx_size_enabled_['_size_enabled_'.$i]
+				'default'  => $grfx_size_enabled['_size_enabled_'.$i]
 			);					
 			
 			/*
@@ -151,9 +150,6 @@ function grfx_stock_image_settings( $settings, $current_section ) {
 				'class'    => 'grfx-divider grfx-expand',	
 			);				
 			
-
-			
-			
 			$i++;
 		}
 		
@@ -210,7 +206,7 @@ class WC_Settings_grfx {
 	static function get_watermark_form(){
 		
 				
-		$wm_path = grfx_core_url(). 'assets/img/watermark/watermark.png';	
+		$wm_path = grfx_plugin_url(). 'assets/img/watermark/watermark.png';	
 		$wm_id = get_option('grfx_watermark_image_id', false);
 		
 		if(!$wm_id){
@@ -343,15 +339,24 @@ class WC_Settings_grfx {
 		
 		<?php endif; ?>
 			
-<br />
-<p><?php _e('Please paste the below code into your wp-config.php file just above where it says: /* That\'s all, stop editing! Happy blogging. */', 'grfx') ?></p>			
-<code>
-if(defined('GRFX_GETTING_INFO'))
-	return;
-</code>
+        <br />
+
+        <!-- 
+        <?php $agency_enabled = grfx_agency_submission_enabled(); ?>
 		<br />
 		<br />
-		<hr />
+		<hr />    
+        <?php _e('Enable Agency Submission Feature?', 'grfx') ?>
+        <label for="grfx_agency_submit_on"> 
+            <input <?php echo $agency_enabled?'checked':'' ?> type="radio" name="grfx_agency_submit" id="grfx_agency_submit_on" value="on" />
+            <?php _e('On', 'grfx') ?>
+        </label>        
+        <label for="grfx_agency_submit_off">
+            <input <?php echo $agency_enabled?'':'checked' ?> type="radio" name="grfx_agency_submit" id="grfx_agency_submit_off" value="off" />
+            <?php _e('Off', 'grfx') ?>
+        </label>        
+        <br />        
+        -->
 		<?php self::get_watermark_form() ?>
 
 		<?php

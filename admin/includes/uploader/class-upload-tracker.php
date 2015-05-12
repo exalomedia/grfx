@@ -8,12 +8,41 @@
 
 
 /*
- * Get wordpress stuff for database
+ * Get wordpress stuff for database if we are calling file directly from uploader
  */
 
 if ( !defined( 'grfx_DOING_UPLOAD_PANEL' ) && !defined( 'grfx_AJAX' ) && !defined('grfx_DOING_CRON') && !defined('grfx_DOING_FTP') ){
-	define('GRFX_GETTING_INFO', true);	
-	require_once('../../../../../../../wp-config.php');
+	
+    /*
+     * We need our uploader to get wordpress database info without accessing 
+     * the core files. So we have this secure encryption system set up which
+     * helps us out. 
+     */
+    
+    define('GRFX_GETTING_INFO', true);		
+    
+    require_once('../../../class-encrypt.php');
+    
+    $config_file = '.config';
+    $pass_file   = '.check';  
+            
+    $sitepass = file_get_contents($pass_file);
+    
+    $decrypt = new grfx_Encryption($sitepass);
+    $ini = $decrypt->get_ini_file($config_file);
+    
+    if(!defined('DB_HOST'))
+        define('DB_HOST', $ini['DB_HOST']);
+    
+    if(!defined('DB_USER'))
+        define('DB_USER', $ini['DB_USER']);
+    
+    if(!defined('DB_PASSWORD'))
+        define('DB_PASSWORD', $ini['DB_PASSWORD']);
+    
+    if(!defined('DB_NAME'))
+        define('DB_NAME', $ini['DB_NAME']);        
+    
 }
 	
 function grfx_test_writer( $filename, $content ) {
@@ -179,10 +208,28 @@ class grfx_Upload_Tracker {
 	 */
 	public function log_upload() {
         
+        global $grfx_SITE_ID;
+        
         if(isset($grfx_SITE_ID) && function_exists('get_current_user_id')){
-            global $grfx_SITE_ID;
+     
             $this->blog_id = $grfx_SITE_ID;
             $this->user_id = get_current_user_id();
+        } else {
+            
+			//get user cookies
+			if ( isset( $_COOKIE['grfx-user-id'] ) && isset( $_COOKIE['grfx-blog-id'] ) ) {
+
+				if ( !is_numeric( $_COOKIE['grfx-user-id'] ) && !is_numeric( $_COOKIE['grfx-blog-id'] ) )
+					return 0;
+
+				$user_id = trim( $_COOKIE['grfx-user-id'] );
+				$this->user_id = $user_id;
+
+				$blog_id = trim( $_COOKIE['grfx-blog-id'] );
+				$this->blog_id = $blog_id;
+
+			}            
+            
         }
 		// Create connection
 		$conn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );

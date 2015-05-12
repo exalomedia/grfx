@@ -70,6 +70,13 @@ class grfx {
 		// Activate plugin when new blog is added
 		add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
 
+        
+        //check and do cron
+		add_action( 'init', array( $this, 'do_cron' ), 1 );
+        //check and do upload
+		add_action( 'init', array( $this, 'doing_upload' ), 1 );        
+        
+        
 		// Load public-facing style sheet and JavaScript.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -81,6 +88,7 @@ class grfx {
 			$this->install_db();
 			grfx_set_sitepass();
 			$this->activate_exiftool();
+            $this->set_defaults();
 		}
         
         add_action('wp_head', array($this, 'preview_image_open_graph_data'));
@@ -279,7 +287,8 @@ class grfx {
 		grfx_set_sitepass();
 		self::install_db();	
 		self::activate_exiftool();
-		
+		self::set_defaults();
+        
 		update_option('grfx_installed_installed', true);
 		
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
@@ -308,7 +317,8 @@ class grfx {
 	}
 
 	public function activate_exiftool(){
-		exec('chmod a+x '.grfx_core_plugin . 'admin/includes/exiftool/exiftool');
+        if(grfx_use_shell_exec())
+            shell_exec('chmod a+x '.grfx_core_plugin . 'admin/includes/exiftool/exiftool');
 	}
 	
 	public function install_db(){
@@ -353,6 +363,39 @@ class grfx {
 		dbDelta($sql);	
 		
 	}
+    
+    /**
+     * Sets up certain default values on activation
+     */
+    public function set_defaults(){        
+        
+        global $grfx_size_default_names, 
+                $grfx_size_default_prices,
+                $grfx_size_default_pixels,
+                $grfx_size_default_license,
+                $delivery_defaults,
+                $grfx_size_enabled ;
+        
+        $defaults = array(
+                $grfx_size_default_names, 
+                $grfx_size_default_prices,
+                $grfx_size_default_pixels,
+                $grfx_size_default_license,
+                $delivery_defaults,
+                $grfx_size_enabled 
+        );
+                
+        foreach($defaults as $d){
+            foreach($d as $k=>$v){
+                $set = get_option($k, '-');
+
+                if($set == '-'){
+                    update_option($k, $v);
+                }
+            }
+        }
+        
+    }
 	
 	/**
 	 * Sets up filesystem on activation
@@ -574,5 +617,45 @@ class grfx {
 	public function filter_method_name() {
 		// @TODO: Define your filter hook callback here
 	}
+    
+    /**
+     * Starts up the cron sequence to check uploads and other things
+     * @return type
+     */
+    public function do_cron(){
+             
+        if(isset($_GET['grfx_crontype']) && isset($_GET['grfx_cronpass'])){
+                  
+            if(!defined('SHORTINIT'))
+                define('SHORTINIT', true);
+            
+            define('DONOTCACHEPAGE', true);
+            define('DONOTCACHEDB', true);
+            define('DONOTMINIFY', true);
+            define('DONOTCDN', true);
+            define('DONOTCACHCEOBJECT', true);
+            
+            define('grfx_DOING_CRON', true);
+
+            require_once(grfx_core_plugin.'includes/class-cron.php');
+
+            require_once(grfx_core_plugin.'cron.php');
+                     
+            die();
+            
+        } else {
+            
+            return;
+            
+        }
+    }
+    
+    /**
+     * IF doing upload, abort wordpress (not needed)
+     */
+    public function doing_upload(){
+            
+        
+    }
 
 }

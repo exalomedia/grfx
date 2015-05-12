@@ -471,7 +471,7 @@ class grfx_Product_Creator {
 			   $grfx_size_default_prices, 
 			   $grfx_size_default_pixels, 
 			   $grfx_size_default_license, 
-			   $grfx_size_enabled_,
+			   $grfx_size_enabled,
 			   $delivery_defaults;
 
 		/*
@@ -487,7 +487,7 @@ class grfx_Product_Creator {
 			$this->set_to_meta('_size_license_'.$i, get_option('_size_license_'.$i, $grfx_size_default_license['_size_license_'.$i]));
 			
 			//This part is important (do not mess up the yes/no) its finicky between woocommerce and grfx
-			$enabled =  get_option('_size_enabled_'.$i, $grfx_size_enabled_['_size_enabled_'.$i]);	
+			$enabled =  get_option('_size_enabled_'.$i, $grfx_size_enabled['_size_enabled_'.$i]);	
 			$this->set_to_meta('_size_enabled_'.$i, $enabled=='yes'?'1':0);
 		
 			$this->set_to_meta('_size_type_enabled_'.$i, get_option('_size_type_enabled_'.$i, $delivery_defaults['_size_type_enabled_'.$i]));

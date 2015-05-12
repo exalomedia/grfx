@@ -10,11 +10,13 @@ class grfx_Uploader{
  
     public function __construct(){
 		
+        if(grfx_use_shell_exec()){
 		/*
 		 * This is necessary in case the plugin has been upgraded, we must re-activate the library
 		 */
 		if(!is_executable (grfx_core_plugin . 'admin/includes/exiftool/exiftool'))
-			exec('chmod a+x '.grfx_core_plugin.'admin/includes/exiftool/exiftool');
+			shell_exec('chmod a+x '.grfx_core_plugin.'admin/includes/exiftool/exiftool');
+        }
     }
     
 	/**
@@ -46,11 +48,11 @@ class grfx_Uploader{
            */
     public function render_js(){
         
-        $js = grfx_plugin_dir().'admin/includes/uploader/plupload/js/';
+        $js = grfx_plugin_url().'admin/includes/uploader/plupload/js/';
         
         $moxie_swf = $js.'Moxie.swf';
         $moxie_xap = $js.'Moxie.xap';
-        $upload_php = grfx_plugin_dir().'admin/includes/uploader/plupload/upload.php';
+        $upload_php = grfx_plugin_url().'admin/includes/uploader/plupload/upload.php';
         
         ?>
         
@@ -66,7 +68,7 @@ class grfx_Uploader{
                         // General settings
                         runtimes : 'html5,flash,silverlight,html4',
                         url : '<?php echo $upload_php; ?>',
-
+                        
                         chunk_size : '1mb',
                         rename : true,
                         dragdrop: true,

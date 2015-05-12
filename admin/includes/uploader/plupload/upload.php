@@ -21,7 +21,6 @@
 #!! is not recommended to be used in production environment as it is. Be sure to 
 #!! revise it and customize to your needs.
 
-
 // Make sure file is not cached (as it happens for example on iOS devices)
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -138,9 +137,13 @@ if (!$chunks || $chunk == $chunks - 1) {
 			
 	require_once('../class-upload-tracker.php');
 	
-	$tracker = new grfx_Upload_Tracker($filePath);
-	$success = $tracker->log_upload();
+	$tracker  = new grfx_Upload_Tracker($filePath);
+	$success  = $tracker->log_upload();
 	$complete = true;
+} else {
+    $tracker  = 0;
+    $success  = 0;
+    $complete = 0;
 }
 
 // Return Success JSON-RPC response

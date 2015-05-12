@@ -11,14 +11,6 @@ $CRON_TEST = true;
 if($CRON_TEST == true)
 	error_reporting( E_ALL );
 
-/*
- * Do not allow to be triggered remotely
- */
-if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){  
-  //die('...'); //just for good measure
-}
-
-
 
 
 /**
@@ -80,24 +72,6 @@ if ( empty( $uploads ) )
 /**
  * SECOND if files, start to process ----   ----   ----   ----   ----   ----   ----   ----   ----   ----   
  */
-
-
-
-
-define('grfx_DOING_CRON', true);
-
-//define('SHORTINIT', true);
-require_once("../../../wp-load.php");
-require_once(ABSPATH.'wp-includes/formatting.php');
-
-if (!defined('grfx_core_plugin'))
-	define('grfx_core_plugin', trailingslashit(plugin_dir_path(__FILE__)));
-
-
-require_once('includes/globals.php');
-require_once('includes/functions.php');
-require_once('includes/class-cron.php');
-
 
 
 /**

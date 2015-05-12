@@ -68,7 +68,9 @@ class grfx_Admin {
 		//runs a very simple directory check - only "crunches" if files must be registered and moved.
 		add_action( 'init', array( $this, 'process_ftp_uploads' ) );
 	
-		
+        //setup_uploader_config
+		add_action( 'init', array( $this, 'setup_uploader_config' ) );
+        
 		// Load admin style sheet and JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
@@ -79,11 +81,14 @@ class grfx_Admin {
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
-
+                
 		if(!grfx_use_imagick()){
 			add_action( 'admin_notices', array($this, 'enable_imagemagick_nag') );	
 		}
 		
+        if(!grfx_use_shell_exec()){
+            add_action( 'admin_notices', array($this, 'enable_shell_exec_nag') );
+        }
 				
 		/*
 		 * Define custom functionality.
@@ -133,11 +138,10 @@ class grfx_Admin {
         
         global $grfx_SITE_ID;
 
-		//set grfx user ID cookie
-        
+		//set grfx user ID cookie        
 
         setcookie( 'grfx-user-id', null, time() -999999, COOKIEPATH, COOKIE_DOMAIN, false );
-		setcookie( 'grfx-user-id', 1, time() + 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );	
+		setcookie( 'grfx-user-id', get_current_user_id(), time() + 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );	
 
         setcookie( 'grfx-blog-id', null, time()  -999999, COOKIEPATH, COOKIE_DOMAIN, false );  
 		setcookie( 'grfx-blog-id', $grfx_SITE_ID, time() + 3600 * 24 * 100, COOKIEPATH, COOKIE_DOMAIN, false );
@@ -158,7 +162,7 @@ class grfx_Admin {
 		}
 
 		if ( isset( $_GET['page'] ) && $_GET['page'] == 'grfx_uploader' ) {
-			wp_enqueue_style( $this->plugin_slug . '-admin-styles-plupload-styles-queue', grfx_plugin_dir() . 'admin/includes/uploader/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css', array(), grfx::VERSION );
+			wp_enqueue_style( $this->plugin_slug . '-admin-styles-plupload-styles-queue', grfx_plugin_url() . 'admin/includes/uploader/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css', array(), grfx::VERSION );
 		}
 
 		wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), grfx::VERSION );
@@ -192,8 +196,8 @@ class grfx_Admin {
 		if ( isset( $_GET['page'] ) && $_GET['page'] == 'grfx_uploader' ) {
 
 			//get plupload                    
-			wp_enqueue_script( $this->plugin_slug . '-admin-script-uploader', grfx_plugin_dir() . 'admin/includes/uploader/plupload/js/plupload.full.min.js', array( 'jquery' ), grfx::VERSION );
-			wp_enqueue_script( $this->plugin_slug . '-admin-script-uploader-queue', grfx_plugin_dir() . 'admin/includes/uploader/plupload/js/jquery.plupload.queue/jquery.plupload.queue.min.js', array( 'jquery' ), grfx::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-script-uploader', grfx_plugin_url() . 'admin/includes/uploader/plupload/js/plupload.full.min.js', array( 'jquery' ), grfx::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-script-uploader-queue', grfx_plugin_url() . 'admin/includes/uploader/plupload/js/jquery.plupload.queue/jquery.plupload.queue.min.js', array( 'jquery' ), grfx::VERSION );
 
 			//get necessary jquery UI elements
 			wp_enqueue_script( 'jquery-ui-core' );
@@ -204,7 +208,7 @@ class grfx_Admin {
 			wp_enqueue_script( 'jquery-effects-core ' );
 
 			//get grfx uploader screen js 
-			wp_enqueue_script( $this->plugin_slug . '-admin-script-uploader-grfx', grfx_plugin_dir() . 'admin/assets/js/uploader.js', array( 'jquery' ), grfx::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-script-uploader-grfx', grfx_plugin_url() . 'admin/assets/js/uploader.js', array( 'jquery' ), grfx::VERSION );
 
 
 			add_action( 'admin_footer', array( $this, 'uploader_js' ) );
@@ -323,12 +327,35 @@ class grfx_Admin {
 	public function enable_imagemagick_nag(){
 		?>
 		<div class="error">
-			<p><?php _e( 'Warning: Imagemagick is not installed or enabled. Images delivered to your customers, as well as preview images, will lack professional quality, especially where advanced color models were used in device or image editing software. This must be corrected.', 'grfx' ); ?></p>
+			<p><?php _e( '<strong>grfx</strong> Warning: Imagemagick is not installed or enabled. Images delivered to your customers, as well as preview images, will lack professional quality, especially where advanced color models were used in device or image editing software. This must be corrected.', 'grfx' ); ?></p>
 			<p><?php _e('In your <strong>php.ini</strong> file (root directory of your site) simply inserting <strong>extension=imagick.so</strong> at the end of the file may be enough, depending on your host.', 'grfx') ?></p>
 			<p><a title="<?php _e('See more here.', 'ss') ?>" href="http://php.net/manual/en/imagick.setup.php"><?php _e('Install imagick for PHP', 'ss') ?></a></p>
 		</div>
 		<?php
 	}
+    
+	/**
+	 * Warn user if shell_exec is not reachable
+	 */
+	public function enable_shell_exec_nag(){
+        if(isset($_GET['shell_nag']) && $_GET['shell_nag']==0){
+            update_option('grfx_shell_nag', 'off');
+        }
+        
+        $display_shell_nag = get_option('grfx_shell_nag', 'on');
+        
+        if($display_shell_nag == 'off')
+            return;
+        
+		?>
+		<div class="error">               
+			<p><?php _e( '<strong>grfx</strong> Warning: The <strong>shell_exec()</strong> function has been disabled by your host. Please request them to enable it.', 'grfx' ); ?></p>
+			<p><?php _e('<strong>grfx</strong> uses <strong>shell_exec()</strong> function to employ the advanced meta-data reading functions for uploaded images. This is not an essential function and you can do without it, but it helps.', 'grfx') ?></p>		
+            <strong><a class="welcome-panel-close" href="<?php echo admin_url('options-general.php?page=grfx&shell_nag=0') ?>"><?php _e('Dismiss this notice.', 'grfx') ?></a></strong><br />   
+        </div>
+		<?php
+	}
+	    
 	
 	
 	
@@ -394,8 +421,8 @@ class grfx_Admin {
 		}
 		
 		/*
-                 * We only add files over two minutes old (to ensure nothing is swiped during upload)
-                 */
+         * We only add files over two minutes old (to ensure nothing is swiped during upload)
+         */
 		foreach($uploads as $file){
 			
             if (time()-filemtime($file) > 3 * 60) {        
@@ -405,13 +432,69 @@ class grfx_Admin {
                 $tracker->prepare_file_from_ftp();
             } else {
               return;
-            }            
-            
-	
+            }   
 			
 		}
-		
 				
 	}
+        
+    /**
+     * Sets up uploader configurations and variables to give access to database.
+     * Config file is encrypted so that it cannot be accessed by other parties. 
+     * Its a dot file as well to avoid direct viewing (as though encryption were 
+     * not enough!)
+     */
+    public function setup_uploader_config(){
+                
+        require_once('class-encrypt.php');
+        
+        $config_file = grfx_core_plugin.'admin/includes/uploader/plupload/.config';
+        $pass_file = grfx_core_plugin.'admin/includes/uploader/plupload/.check';  
+        
+        $sitepass = grfx_get_sitepass();
+        $cf = "DB_HOST='".DB_HOST."';\n";
+        $cf .= "DB_USER='".DB_USER."';\n";
+        $cf .= "DB_PASSWORD='".DB_PASSWORD."';\n";
+        $cf .= "DB_NAME='".DB_NAME."';\n";
+
+        $crypt = new grfx_Encryption($sitepass);
+        
+        $encrypted_string = $crypt->encrypt($cf);        
+        
+        if(file_exists($config_file)){
+            
+            $string = file_get_contents($config_file);
+            
+            if($string != $encrypted_string){
+                grfx_write_file($config_file, $encrypted_string); 
+                grfx_write_file($pass_file, $sitepass);
+            }
+            
+        } else {            
+            grfx_write_file($config_file, $encrypted_string);  
+            grfx_write_file($pass_file, $sitepass);
+        }         
+
+        //$decrypt = new grfx_Encryption($sitepass);
+        //$ini = $decrypt->get_ini_file($config_file);
+        //var_dump($ini);
+        //die();
+    }
+    
+    /*
+     * AGENCY FTP FUNCTIONS
+     */
+    
+    public function set_up_agency_submission_feature(){
+        
+        if(!grfx_agency_submission_enabled())
+            return;
+        
+        //still to do
+        
+        
+    }
+    
+    
 
 }

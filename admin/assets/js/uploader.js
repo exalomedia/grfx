@@ -120,7 +120,7 @@
                 'grfx-process-now': process_now,
                 async: false
             };
-
+            
             $.ajaxQueue({
                 type: 'POST',
                 url: ajax_object.ajax_url,
@@ -186,8 +186,7 @@
                 var iteration = 0;
 
                 //loading_img.show();
-
-
+                
                 $.each(selected, function (key, value) {
 
                     $('#grfx-upload-row-' + value + ' .grfx-entry-original-name').append('<span class="grfx-processing">...</span>');

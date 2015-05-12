@@ -186,7 +186,10 @@ function grfx_downloads_available($site, $user, $fileid){
  * @param int $f_size Final (desired) size
  */
 function grfx_scaled_image_size( $o_size_x, $o_size_y, $f_size){
-
+    
+    if(!$o_size_x || !$o_size_x)
+        return;
+    
 	if($o_size_x <= $o_size_y){
 		$r = $f_size/$o_size_y;
 		$w = round($o_size_x*$r);
@@ -378,7 +381,7 @@ function grfx_set_sitepass(){
  * @subpackage Constants
  */
 function grfx_cron_path() {
-	$cron_path =  "* * * * * curl --silent " . "'".trailingslashit(plugins_url())."grfx/cron.php?grfx_crontype=1&grfx_cronpass=".grfx_get_sitepass()."'";
+	$cron_path =  "* * * * * curl --silent " . "'".trailingslashit(home_url())."?grfx_crontype=1&grfx_cronpass=".grfx_get_sitepass()."'";
     if (!defined('grfx_cron_path'))
         define('grfx_cron_path', $cron_path);
     return grfx_cron_path;
@@ -421,3 +424,30 @@ function grfx_to_slug($string){
     return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
 }
 
+/**
+ * Determines if agency submission tool is enabled.
+ * 
+ * @package grfx
+ * @subpackage HelperFunctions
+ * @return boolean
+ */
+function grfx_agency_submission_enabled(){    
+    
+    if(isset($_POST['grfx_agency_submit'])){
+        if(is_string($_POST['grfx_agency_submit'])){  
+            $submit = stripslashes($_POST['grfx_agency_submit']);
+            update_option('grfx_agency_submit', $submit);
+        }
+    }
+    
+    $submit = get_option('grfx_agency_submit', 'off');
+    
+    if($submit == 'on')
+        return true;
+    
+    if($submit == 'off')
+        return false;   
+    
+    return false;       
+    
+}

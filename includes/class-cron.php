@@ -100,6 +100,7 @@ class grfx_Cron {
 		$this->cron_lock( 0 );
 
 		$this->cleanup();
+  
 	}
 
     

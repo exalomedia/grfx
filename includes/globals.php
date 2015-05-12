@@ -61,7 +61,6 @@ function grfx_uploads_dir() {
 
 grfx_uploads_dir();
 
-
 /**
  * File path to the 'grfx_ftp' content directory located in wp-content directory of site.
  * 
@@ -151,24 +150,6 @@ function grfx_download_script() {
     return grfx_download_script;
 }
 
-/**
- * File path to the 'grfx' plugin directory.
- * 
- * @package grfx
- * @subpackage Constants
- */
-function grfx_plugin_dir() {
-	
-	if(defined('grfx_DOING_CRON'))
-		return;
-	
-    if (!defined('grfx_plugin_dir'))
-        define('grfx_plugin_dir', trailingslashit(plugins_url( 'grfx')));
-    return grfx_plugin_dir;
-}
-
-grfx_plugin_dir();
-
 
 /**
  * File path to the 'grfx' assets directory.
@@ -182,7 +163,7 @@ function grfx_assets_dir() {
 		return;	
 	
     if (!defined('grfx_assets_dir'))
-        define('grfx_assets_dir', trailingslashit(plugins_url( 'grfx')) . 'assets/');
+        define('grfx_assets_dir', grfx_plugin_url() . 'assets/');
     return grfx_assets_dir;
 }
 
@@ -200,7 +181,7 @@ function grfx_includes_dir() {
 		return;	
 	
     if (!defined('grfx_includes_dir'))
-        define('grfx_includes_dir', trailingslashit(plugins_url( 'grfx')) . 'includes/');
+        define('grfx_includes_dir', grfx_plugin_url(). 'includes/');
     return grfx_includes_dir;
 }
 
@@ -263,6 +244,24 @@ function grfx_use_imagick() {
 
 grfx_use_imagick();
 
+/**
+ * Whether or not host has enabled shell_exec
+ * 
+ * @package grfx
+ * @subpackage Constants
+ */
+function grfx_use_shell_exec() {
+    $has_shell_exec = is_callable('shell_exec') && false === stripos(ini_get('disable_functions'), 'shell_exec');
+    
+    if (!defined('grfx_use_shell_exec'))
+        define('grfx_use_shell_exec', $has_shell_exec);  
+    
+    return $has_shell_exec;
+    
+}
+
+grfx_use_shell_exec();
+
 /* ----------------------------------------------------------------------------*
  * GLOBAL variable names
  * ---------------------------------------------------------------------------- */
@@ -311,15 +310,15 @@ $grfx_size_default_license = array(
 	'_size_license_8' => __('', 'grfx')
 	);
 
-$grfx_size_enabled_ = array(
-	'_size_enabled_1' => __('1', 'grfx'),
-	'_size_enabled_2' => __('1', 'grfx'),	
-	'_size_enabled_3' => __('1', 'grfx'),	
-	'_size_enabled_4' => __('1', 'grfx'),	
-	'_size_enabled_5' => __(0, 'grfx'),	
-	'_size_enabled_6' => __(0, 'grfx'),	
-	'_size_enabled_7' => __(0, 'grfx'),	
-	'_size_enabled_8' => __(0, 'grfx')
+$grfx_size_enabled = array(
+	'_size_enabled_1' => __('yes', 'grfx'),
+	'_size_enabled_2' => __('yes', 'grfx'),	
+	'_size_enabled_3' => __('yes', 'grfx'),	
+	'_size_enabled_4' => __('yes', 'grfx'),	
+	'_size_enabled_5' => __('yes', 'grfx'),	
+	'_size_enabled_6' => __('yes', 'grfx'),	
+	'_size_enabled_7' => __('yes', 'grfx'),	
+	'_size_enabled_8' => __('yes', 'grfx')
 	);
 
 $delivery_defaults = array(

@@ -11,10 +11,10 @@
  * @copyright 2014 Leo Blanchette
  *
  * @wordpress-plugin
- * Plugin Name:       grfx
+ * Plugin Name:       WooCommerce Stock Images by grfx
  * Plugin URI:        http://www.grfx.co
- * Description:       grfx Core - Core functionality of the grfx system. grfx is a stock illustration authoring tool for graphic artists and illustrators. 
- * Version: 1.1.58
+ * Description:       Sell stock images. Beautifully. Creates a specialized WooCommerce stock image product type. Loved by stock image producers, illustrators, and graphic artists. Automatically processes images into downloadable products, priced by size and license. Light-weight. Great SEO. 
+ * Version: 1.1.68
  * Author:            Leo Blanchette
  * Author URI: http://www.grfx.co       
  * Text Domain:  grfx
@@ -24,8 +24,7 @@
  * GitHub Plugin URI: https://github.com/orangeman555/grfx
  */
 
-define('grfx_version', '1.1.58');
-
+define('grfx_version', '1.1.68');
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -76,20 +75,26 @@ function grfx_plugin_basename() {
 }
 grfx_plugin_basename();
 
-
-
 /**
- * Main url to plugin.
- *
+ * File path to the 'grfx' plugin directory.
+ * 
  * @package grfx
  * @subpackage Constants
  */
-function grfx_core_url() {
-    if (!defined('grfx_core_url'))
-        define('grfx_core_url', trailingslashit(plugins_url( )).'grfx/');
-	return grfx_core_url;
+function grfx_plugin_url() {
+	
+	if(defined('grfx_DOING_CRON'))
+		return;
+	
+    if (!defined('grfx_plugin_url'))
+        define('grfx_plugin_url', trailingslashit(plugin_dir_url( __FILE__ ) ));
+     
+    return grfx_plugin_url;
+    
 }
-grfx_core_url();
+
+grfx_plugin_url();
+
 
 /*----------------------------------------------------------------------------*
  * General Functionality
@@ -171,9 +176,6 @@ if ( is_admin( ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 		require_once('admin/includes/plugins/plugins.php');
 	}
 
-	require_once('admin/includes/plugins/wp-updates-plugin.php');
-		new WPUpdatesPluginUpdater_964( 'http://wp-updates.com/api/2/plugin', plugin_basename(__FILE__));
-		
 	/*
 	 * Redirect user to various pages on various events (such as plugin activation)
 	 */

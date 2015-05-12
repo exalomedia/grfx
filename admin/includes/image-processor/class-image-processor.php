@@ -445,6 +445,9 @@ class grfx_Image_Processor {
      */
     public function get_image_metadata($file_name) {
 
+        if(!grfx_use_shell_exec())
+            return 0;
+        
         $command = grfx_exiftool . ' -json ';
         $command .= $file_name;
 
