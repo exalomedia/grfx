@@ -316,6 +316,7 @@ class grfx {
 
 	}
 
+    
 	public function activate_exiftool(){
         if(grfx_use_shell_exec())
             shell_exec('chmod a+x '.grfx_core_plugin . 'admin/includes/exiftool/exiftool');

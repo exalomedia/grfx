@@ -14,7 +14,7 @@
  * Plugin Name:       WooCommerce Stock Images by grfx
  * Plugin URI:        http://www.grfx.co
  * Description:       Sell stock images. Beautifully. Creates a specialized WooCommerce stock image product type. Loved by stock image producers, illustrators, and graphic artists. Automatically processes images into downloadable products, priced by size and license. Light-weight. Great SEO. 
- * Version: 1.1.68
+ * Version: 1.1.75
  * Author:            Leo Blanchette
  * Author URI: http://www.grfx.co       
  * Text Domain:  grfx
@@ -24,25 +24,12 @@
  * GitHub Plugin URI: https://github.com/orangeman555/grfx
  */
 
-define('grfx_version', '1.1.68');
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
-
-/**
- * This constant should be checked by dependent grfx plugins. If it is not defined,
- * the plugin should self-deactivate.
- * 
- * @package grfx
- * @subpackage Constants
+/*
+ * Get main functions file
  */
-function grfx_core_active() {
-    define('grfx_core_active', 1);
-}
+require_once( plugin_dir_path( __FILE__ ) . 'includes/compatability.php' );
 
-grfx_core_active();
 
 /* ----------------------------------------------------------------------------*
  * General Functionality

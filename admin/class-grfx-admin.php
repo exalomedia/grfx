@@ -330,7 +330,8 @@ class grfx_Admin {
 			<p><?php _e( '<strong>grfx</strong> Warning: Imagemagick is not installed or enabled. Images delivered to your customers, as well as preview images, will lack professional quality, especially where advanced color models were used in device or image editing software. This must be corrected.', 'grfx' ); ?></p>
 			<p><?php _e('In your <strong>php.ini</strong> file (root directory of your site) simply inserting <strong>extension=imagick.so</strong> at the end of the file may be enough, depending on your host.', 'grfx') ?></p>
 			<p><a title="<?php _e('See more here.', 'ss') ?>" href="http://php.net/manual/en/imagick.setup.php"><?php _e('Install imagick for PHP', 'ss') ?></a></p>
-		</div>
+            <?php echo grfx_encourage_fix(); ?>
+        </div>
 		<?php
 	}
     
@@ -352,6 +353,7 @@ class grfx_Admin {
 			<p><?php _e( '<strong>grfx</strong> Warning: The <strong>shell_exec()</strong> function has been disabled by your host. Please request them to enable it.', 'grfx' ); ?></p>
 			<p><?php _e('<strong>grfx</strong> uses <strong>shell_exec()</strong> function to employ the advanced meta-data reading functions for uploaded images. This is not an essential function and you can do without it, but it helps.', 'grfx') ?></p>		
             <strong><a class="welcome-panel-close" href="<?php echo admin_url('options-general.php?page=grfx&shell_nag=0') ?>"><?php _e('Dismiss this notice.', 'grfx') ?></a></strong><br />   
+            <?php echo grfx_encourage_fix(); ?>
         </div>
 		<?php
 	}
@@ -439,6 +441,31 @@ class grfx_Admin {
 	}
         
     /**
+     * Checks to see if database credentials have changed based on a specific 
+     * database credentials string
+     * 
+     * @param type $credentials
+     * @return boolean
+     */
+    public function database_credentials_changed($credentials){
+        
+        $hash_file = grfx_core_plugin.'admin/includes/uploader/plupload/.hash'; 
+        
+        if(!file_exists($hash_file)){
+            return true;
+        } else {
+            $hash = file_get_contents($hash_file);
+            
+            if(md5($credentials) == $hash){
+                return false;
+            } else {
+                return true;
+            }
+        }
+        
+    }
+    
+    /**
      * Sets up uploader configurations and variables to give access to database.
      * Config file is encrypted so that it cannot be accessed by other parties. 
      * Its a dot file as well to avoid direct viewing (as though encryption were 
@@ -450,6 +477,8 @@ class grfx_Admin {
         
         $config_file = grfx_core_plugin.'admin/includes/uploader/plupload/.config';
         $pass_file = grfx_core_plugin.'admin/includes/uploader/plupload/.check';  
+        $hash_file = grfx_core_plugin.'admin/includes/uploader/plupload/.hash';    
+        
         
         $sitepass = grfx_get_sitepass();
         $cf = "DB_HOST='".DB_HOST."';\n";
@@ -457,30 +486,32 @@ class grfx_Admin {
         $cf .= "DB_PASSWORD='".DB_PASSWORD."';\n";
         $cf .= "DB_NAME='".DB_NAME."';\n";
 
-        $crypt = new grfx_Encryption($sitepass);
+        $credentials_changed = $this->database_credentials_changed($cf);
         
-        $encrypted_string = $crypt->encrypt($cf);        
-        
-        if(file_exists($config_file)){
+        if($credentials_changed){     
             
-            $string = file_get_contents($config_file);
+            file_put_contents($hash_file, md5($cf));
             
-            if($string != $encrypted_string){
-                grfx_write_file($config_file, $encrypted_string); 
-                grfx_write_file($pass_file, $sitepass);
-            }
-            
-        } else {            
-            grfx_write_file($config_file, $encrypted_string);  
-            grfx_write_file($pass_file, $sitepass);
-        }         
+            $crypt = new grfx_Encryption($sitepass);
+                        
+            $encrypted_string = $crypt->encrypt($cf);        
 
-        //$decrypt = new grfx_Encryption($sitepass);
-        //$ini = $decrypt->get_ini_file($config_file);
-        //var_dump($ini);
-        //die();
+            if(file_exists($config_file)){
+
+                $string = file_get_contents($config_file);
+
+                if($string != $encrypted_string){
+                    grfx_write_file($config_file, $encrypted_string); 
+                    grfx_write_file($pass_file, $sitepass);
+                }
+
+            } else {            
+                grfx_write_file($config_file, $encrypted_string);  
+                grfx_write_file($pass_file, $sitepass);
+            }         
+        }
+ 
     }
-    
     /*
      * AGENCY FTP FUNCTIONS
      */

@@ -705,10 +705,10 @@ function grfx_remove_price_html( $price, $product ){
  * @param type $product
  */
 function grfx_info_modal($option, $product){
-	
+
 	$option_license = '_size_license_'.$option;
 
-	$license_text   = get_option('grfx_license_text_'.$option, __('License Text', 'grfx'));
+	$license_text   = get_option('grfx_license_text_'.$product['data']->$option_license, __('License Text', 'grfx'));
 	
 	$license_title  = get_option('grfx_license_name_'.$product['data']->$option_license, __('License One', 'grfx'));
 
@@ -833,22 +833,19 @@ function grfx_filter_test($price, $product){
 
 //add_action('woocommerce_before_main_content', 'grfx_test');
 function grfx_test(){
-    //var_dump(the_post());
+  
     $id = get_the_id();
 	
 		
 
 
 	global $woocommerce;
-	//var_dump($price, $woocommerce->cart);
-	
+
     
     $product = wc_get_product($id);    
 
     $meta = get_post_meta($id);
 
-    var_dump($meta);
-	
 	var_dump($product);
 	
     return;

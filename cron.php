@@ -29,8 +29,8 @@ if ( $files ) {
     $signature = false;
     $filesum   = false;
     
-    if(file_exists('tmp/filesum'))
-        $filesum = file_get_contents ('tmp/filesum');
+    if(file_exists(trailingslashit(grfx_tmp_dir()).'filesum'))
+        $filesum = file_get_contents (trailingslashit(grfx_tmp_dir()).'filesum');
     
 	foreach ( $files as $file ) {
 		if ( $file == '.' || $file == '..' || $file == '.htaccess' || $file == '.ftpquota' )
@@ -52,7 +52,7 @@ if ( $files ) {
        if($signature == $filesum)
            die(':(');
    } else {
-       file_put_contents('tmp/filesum', $signature);
+       file_put_contents(trailingslashit(grfx_tmp_dir()).'filesum', $signature);
    }
     
 }

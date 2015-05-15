@@ -100,6 +100,16 @@
                     });
         }
         
+        
+        function isJson(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return false;
+            }
+            return true;
+        }        
+        
         /*
                 * Uploader wordpress-Ajax Functionality
                 */
@@ -141,16 +151,22 @@
                             return false;
                         }
 
-                        var results = JSON.parse(response);
-                        var message = results.message;
-                        var processed_id = results.processed_id;
+                        if(isJson(response)){
 
-                        $(message).appendTo('#grfx-upload-row-' + processed_id + ' .grfx-entry-original-name');
+                            var results = JSON.parse(response);
+                            var message = results.message;
+                            var processed_id = results.processed_id;
 
-                        $('#grfx-upload-row-' + processed_id).addClass('grfx-upload-complete');
-                        //grfx-upload-processing
-                        $('#grfx-upload-row-' + processed_id).removeClass('grfx-upload-processing');
+                            $(message).appendTo('#grfx-upload-row-' + processed_id + ' .grfx-entry-original-name');
 
+                            $('#grfx-upload-row-' + processed_id).addClass('grfx-upload-complete');
+                            //grfx-upload-processing
+                            $('#grfx-upload-row-' + processed_id).removeClass('grfx-upload-processing');
+                            
+                        } else {
+                            alert('DON\'T PANIC! :) There was an error. See it at the bottom of the page, copy/paste it somewhere, and share it with your host or our help forums so that it can be fixed.');
+                            $('<h4>There was an Error:</h4>'+response+'<p>Please show this error to your host or inquire of it in our help forums. It will likely require a simple update on your server.</p>').insertAfter('#grfx-upload-manager');
+                        }
                         /**
                                                 setTimeout(function () {
                                                     $('#grfx-upload-row-' + processed_id).fadeOut(3000);

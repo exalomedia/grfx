@@ -100,7 +100,7 @@ class grfx_Image_Metadata{
 				$iptc = iptcparse( $info['APP13'] );
 				
 				// Keywords
-				if ( !empty( $iptc["2#025"] && is_array($iptc["2#025"]) ) ) {					
+				if ( !empty( $iptc["2#025"]) && is_array($iptc["2#025"])  ) {					
 					$keywords = array();
 					foreach($iptc["2#025"] as $keyword)
 						array_push($keywords, $keyword);							
