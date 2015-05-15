@@ -1,3 +1,7 @@
+You can download **grfx** at wordpress.org: https://wordpress.org/plugins/grfx/
+
+------------------------------
+
 # grfx (graphics) - the Illustrator's Stock Image Authoring Tool ( http://www.grfx.co/ )
 
  - **grfx** is a specialized open source tool for illustrators and graphic artists to independently publish stock images.

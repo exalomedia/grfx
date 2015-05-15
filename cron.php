@@ -11,14 +11,9 @@ $CRON_TEST = true;
 if($CRON_TEST == true)
 	error_reporting( E_ALL );
 
-
-
 /**
  * FIRST, Verify there are uploads before loading any sort of process. ----   ----   ----   ----   ----   
  */
-
-
-
 
 $uploads = array();
 
