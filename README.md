@@ -1,5 +1,7 @@
 You can download **grfx** at wordpress.org: https://wordpress.org/plugins/grfx/
 
+To ensure a proper environment, we recommend [Bluehost](http://www.bluehost.com/track/grfx/ "Bluehost"), since they allow all special functionality required for this plugin. 
+
 ------------------------------
 
 # grfx (graphics) - the Illustrator's Stock Image Authoring Tool ( http://www.grfx.co/ )
@@ -36,33 +38,27 @@ Most installations have imagemagick installed. You need only activate Imagick (p
  
 Need help? Most hosts can set this up for you if you call them.
 
-### 2: Modify ```wp-config.php```
 
- - Go to your root directory (where Wordpress was installed)
- - Open up the file ```wp-config.php```.
- - Find the line that says: ```/* That's all, stop editing! Happy blogging. */```:
- - Just ABOVE that line, paste this code: ```if(defined('GRFX_GETTING_INFO')) return; ```
-
-### 3: Activate!
+### 2: Activate!
 
 - Install the grfx.zip file the way you install any wordpress plugin. 
 - NOTE: If you downloaded the zip from github, rename it to grfx.zip. If you have the unzipped folder (such as a mac user) rezip it and ensure that it is called grfx.zip. 
 - Don't know how to install a plugin? https://codex.wordpress.org/Managing_Plugins
 - Now, go to your wordpress plugins directory [admin->plugins] and activate the **grfx** plugin. Things are getting really awesome now.
 
-### 4: Set up your store info.
+### 3: Set up your store info.
 
 - Once activating, you be taken to an introduction page with three links.
 - Follow each link, and fully configure your price and license settings. It should be self-explanatory.
 - Now configure woocommerce itself for all of your basic store and payment gateway information.
 
-### 5: Setting up the Cron (optional?)
+### 4: Setting up the Cron (optional?)
 This is optional for single site, **required for multisite**. It is suggested you set up this feature if you upload a lot. Once you upload your images and enqueue them, your site will publish them a few at a time until they are done. What is the advantage in this? If your one of those super-dedicated stock image creators, you can upload a thousand of your meta-data-prepared images, go to bed, and wake up with them all published.
 
 For a **multisite** network its, no joke, highly recommended you get this feature active on your site. If not, several users publishing at once could cause overloads. Otherwise multiple user's files will be processed in line, one after another. 
 
 #### Setting up Cron - Simple
-Chances are, if you are on a popular host such as BLUEHOST with cpanel, cron jobs are easy to set up. 
+Chances are, if you are on a popular host such as [Bluehost](http://www.bluehost.com/track/grfx/ "Bluehost") with cpanel, cron jobs are easy to set up. 
 - Copy the cron-command from your **Woocommerce->Settings->grfx** area. It should look like this:
 ```* * * * * curl --silent 'http://www.mysite.com/grfx/test/wp-content/plugins/grfx/cron.php?grfx_crontype=1&grfx_cronpass=8eb09aa5edbf60ef499c682a90916c28'```
 - Delete the leading five asterisks, so that it looks like this: 

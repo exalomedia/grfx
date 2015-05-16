@@ -1,12 +1,21 @@
 <?php
 
 
-define('grfx_version', '1.1.75');
+define('grfx_version', '1.1.76');
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+/**
+ * If functionality is limited on given server, suggest different option
+ * @return string
+ */
+function grfx_proper_hosting(){
+    return ' <small><a href="//www.bluehost.com/track/grfx/" target="_blank"> Bluehost</a> '.__(' is recommended for hosting grfx as it allows the perfect environment for <strong>grfx</strong> functionality.', 'grfx').'</small>';
+}
+
 
 /**
  * Ensures that the user tries to fix the problems instead of abandoning the 
@@ -17,8 +26,10 @@ if ( ! defined( 'WPINC' ) ) {
  * @return boolean|string
  */
 function grfx_encourage_fix(){
-    return '<br />'. __('Please resolve these problems and <strong>grfx</strong> should work great for you.', 'grfx');
+    return '<br />'. __('Please resolve these problems and <strong>grfx</strong> should work great for you. If you cannot resolve them on your current host, ', 'grfx').
+        grfx_proper_hosting();
 }
+
 
 /**
  * Checks that the version is correct;

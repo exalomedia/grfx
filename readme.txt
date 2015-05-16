@@ -1,6 +1,6 @@
 === WooCommerce Stock Images by grfx ===
 Contributors: grfx
-Tags: stock images, image, sell, illustration, photography, illustrator, photographer, portfolio, woocommerce, multisite, grfx
+Tags: wooCommerce stock images , image library, stock photography, shop, watermark, image seo, photo gallery, image, sell photos, graphic design, album, stock images, photo, pictures, gallery, sell stockphotos, online art, photographer, multisite, image-store, clipart, image gallery, picture, sell, online store, album, digital images, vectors, royalty free, illustrations, graphics, media, store, ecommerce, photoblog, photos, seo, graphicart, artstore, digital downloads, illustrator, stockphotos, photogallery, shopping, photography store, sell photographs, e-commerce, royalty free images, watermarking, sell pictures, portfolio, thumbnails, macrostock, grfx, photography, image hosting, artist, photo management, digital art, woocommerce, art, selling, image album, image processing
 Requires at least: 4.2.0
 Tested up to: 4.2.2
 Stable tag: 1.1.68
@@ -48,6 +48,7 @@ Are you an illustrator or graphic artist? Have you ever heard of stock imaging? 
 
 **Want to see the code docs?** They are here: http://grfx.co/docs/
 
+To ensure a proper environment, we recommend [Bluehost](http://www.bluehost.com/track/grfx/ "Bluehost") or equivelent, since they allow all special functionality required for this plugin. 
 
 
 == Installation ==
@@ -63,6 +64,7 @@ Are you an illustrator or graphic artist? Have you ever heard of stock imaging? 
 This isn't just some image plugin - it turns your site into a professional, high quality stock image selling store.
 Be sure to follow these installation directions for best results.
 
+To ensure a proper environment, we recommend [Bluehost](http://www.bluehost.com/track/grfx/ "Bluehost") or equivelent, since they allow all special functionality required for this plugin. 
 
 **Installing the grfx Authoring Tool**
 
@@ -109,7 +111,7 @@ For a **multisite** network its, no joke, highly recommended you get this featur
 
 **Setting up Cron - Simple**
 
-Chances are, if you are on a popular host such as BLUEHOST with cpanel, cron jobs are easy to set up. 
+Chances are, if you are on a popular host such as [Bluehost](http://www.bluehost.com/track/grfx/ "Bluehost") with cpanel, cron jobs are easy to set up. 
 
 - Copy the cron-command from your **Woocommerce->Settings->grfx** area. It should look like this: ```* * * * * curl --silent 'http://www.mysite.com/grfx/test/wp-content/plugins/grfx/cron.php?grfx_crontype=1&grfx_cronpass=8eb09aa5edbf60ef499c682a90916c28'```
 - Delete the leading five asterisks, so that it looks like this: ```curl --silent 'http://www.mysite.com/grfx/test/wp-content/plugins/grfx/cron.php?grfx_crontype=1&grfx_cronpass=8eb09aa5edbf60ef499c682a90916c28'```
