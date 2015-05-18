@@ -354,23 +354,31 @@ class grfx_Image_Processor {
 				$draw = new ImagickDraw();
 
 				// Set font properties
-				$draw->setFont( 'Bookman' );
-				$draw->setFontSize( 24 );
-				$draw->setFillColor( '#EEE' );
-				$draw->setfillopacity( 0.50 );
+                try{
+                    
+                    $draw->setFont( 'Bookman' );
 
-				// Position text at the bottom-right of the image
-				$draw->setGravity( Imagick::GRAVITY_SOUTH );
+                    $draw->setFontSize( 24 );
+                    $draw->setFillColor( '#EEE' );
+                    $draw->setfillopacity( 0.50 );
 
-				$y = -20;
-				$o = 0.25;
-				while ( $y < $s ) {
-					// Draw text on the image
-					$draw->setfillopacity( $o );
-					$image->annotateImage( $draw, 0, $y, 0, $text );
-					$y = $y + 50;
-					$o = $o; // - .1
-				}
+                    // Position text at the bottom-right of the image
+                    $draw->setGravity( Imagick::GRAVITY_SOUTH );
+
+                    $y = -20;
+                    $o = 0.25;
+                    while ( $y < $s ) {
+                        // Draw text on the image
+                        $draw->setfillopacity( $o );
+                        $image->annotateImage( $draw, 0, $y, 0, $text );
+                        $y = $y + 50;
+                        $o = $o; // - .1
+                    }
+                    
+                }catch(Exception $e){
+                    
+                }
+                
 			}
 
 			$image->writeImage( $this->tmp_dir . 'tmp-minipic' . $mime );

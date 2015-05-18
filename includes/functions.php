@@ -398,7 +398,8 @@ grfx_cron_path();
 function grfx_plugin_info(){
 		
 	if (grfx_use_imagick()) {
-		$image_system = __('(Using ImageMagick)', 'grfx');
+        $v = Imagick::getVersion();
+		$image_system = '('.__('Using ', 'grfx').$v['versionString'].')';
 	} else {
 		$image_system = __('(Using GD Library)', 'grfx');
 	}

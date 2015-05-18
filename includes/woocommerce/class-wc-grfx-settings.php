@@ -317,7 +317,7 @@ class WC_Settings_grfx {
 	 */
 	public static function settings_tab() {
 		
-		?><span class="grfx-logo-right"><?php echo grfx_logo_img() ?></span> <h2><?php echo  grfx_plugin_info() ?></h2><?php
+		?><span class="grfx-logo-right"><?php echo grfx_logo_img() ?></span> <p><?php echo  grfx_plugin_info() ?></p><?php
 		
 		//woocommerce_admin_fields( self::get_settings() );
 		?>
