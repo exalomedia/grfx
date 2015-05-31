@@ -82,7 +82,7 @@ class grfx_Admin {
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
                 
-		if(!grfx_use_imagick()){
+		if(!grfx_use_imagick){
 			add_action( 'admin_notices', array($this, 'enable_imagemagick_nag') );	
 		}
 		
@@ -325,12 +325,26 @@ class grfx_Admin {
 	 * Warn user if imagick is not currently active.
 	 */
 	public function enable_imagemagick_nag(){
+        
+        if(isset($_GET['imagick_nag']) && $_GET['imagick_nag']==0){
+            update_option('grfx_imagick_nag', 'off');
+        }
+        
+        $display_imagick_nag = get_option('grfx_imagick_nag', 'on');
+        
+        if($display_imagick_nag == 'off')
+            return;                
+        
 		?>
 		<div class="error">
 			<p><?php _e( '<strong>grfx</strong> Warning: Imagemagick is not installed or enabled. Images delivered to your customers, as well as preview images, will lack professional quality, especially where advanced color models were used in device or image editing software. This must be corrected.', 'grfx' ); ?></p>
 			<p><?php _e('In your <strong>php.ini</strong> file (root directory of your site) simply inserting <strong>extension=imagick.so</strong> at the end of the file may be enough, depending on your host.', 'grfx') ?></p>
 			<p><a title="<?php _e('See more here.', 'ss') ?>" href="http://php.net/manual/en/imagick.setup.php"><?php _e('Install imagick for PHP', 'ss') ?></a></p>
+
             <?php echo grfx_encourage_fix(); ?>
+            
+            <strong><a class="welcome-panel-close" href="<?php echo admin_url('options-general.php?page=grfx&imagick_nag=0') ?>"><?php _e('Dismiss this notice.', 'grfx') ?></a></strong><br />  
+           
         </div>
 		<?php
 	}

@@ -133,11 +133,11 @@ $complete = false;
 // Check if file has been uploaded
 if (!$chunks || $chunk == $chunks - 1) {
 	// Strip the temp .part suffix off 
-	rename("{$filePath}.part", $filePath);
+	rename("{$filePath}.part", strtolower($filePath));
 			
 	require_once('../class-upload-tracker.php');
 	
-	$tracker  = new grfx_Upload_Tracker($filePath);
+	$tracker  = new grfx_Upload_Tracker(strtolower($filePath));
 	$success  = $tracker->log_upload();
 	$complete = true;
 } else {

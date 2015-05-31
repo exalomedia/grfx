@@ -1,7 +1,7 @@
 <?php
 
 
-define('grfx_version', '1.1.78');
+define('grfx_version', '1.1.80');
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -38,7 +38,7 @@ function grfx_encourage_fix(){
  * @subpackage Compatability
  * @return boolean|string
  */
-function grfx_version_check($wp = '4.2', $php = '5.2.4'){
+function grfx_version_check($wp = '4.2', $php = '5.4'){
         
     global $wp_version;
     

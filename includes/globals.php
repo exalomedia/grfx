@@ -231,7 +231,7 @@ grfx_exiftool();
  */
 function grfx_use_imagick() {
 	
-	if(extension_loaded( 'imagick' ) ){
+	if( extension_loaded( 'imagick' ) || class_exists("Imagick") || function_exists("NewMagickWand") ){
 		$imagick_installed = true;
 	} else {
 		$imagick_installed = false;
