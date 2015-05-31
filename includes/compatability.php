@@ -1,7 +1,7 @@
 <?php
 
 
-define('grfx_version', '1.1.80');
+define('grfx_version', '1.1.81');
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -51,7 +51,7 @@ function grfx_version_check($wp = '4.2', $php = '5.4'){
         else
             return;
         
-                
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );        
         deactivate_plugins( basename( __FILE__ ) );
         
         $wp_message = __('grfx requires at least Wordpress version ', 'grfx') . $wp.';';
