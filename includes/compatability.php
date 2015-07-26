@@ -1,7 +1,7 @@
 <?php
 
 
-define('grfx_version', '1.1.81');
+define('grfx_version', '1.1.85');
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -99,3 +99,27 @@ function grfx_core_active() {
 
 grfx_core_active();
 
+// Added to extend allowed files types in Media upload
+add_filter('upload_mimes', 'custom_upload_mimes');
+
+/**
+ * Ensure users can upload vector files
+ * 
+ * @package grfx
+ * @subpackage Compatability
+ * @param type $existing_mimes
+ * @return string
+ */
+function custom_upload_mimes ( $existing_mimes=array() ) {
+    
+    $existing_mimes['eps'] = 'application/postscript';
+    
+    $existing_mimes['ai'] = 'application/postscript';
+
+    $existing_mimes['psd'] = 'application/photoshop';
+    
+    $existing_mimes['svg'] = 'text/xml';
+    
+    return $existing_mimes;
+    
+}

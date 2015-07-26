@@ -246,7 +246,7 @@ function render_option_table(){
 
 	global $grfx_size_default_names;	
 	global $product;
-    global $grfx_SITE_ID;
+        global $grfx_SITE_ID;
     
 	if($product->product_type != 'stock_image')
 		return;
@@ -254,8 +254,10 @@ function render_option_table(){
 	//have filetypes ready
 	$filetypes = grfx_filetypes();
 	
-    $available = grfx_downloads_available($grfx_SITE_ID, (int) $product->post->post_author, $product->id );
-    
+        $available = grfx_downloads_available($grfx_SITE_ID, (int) $product->post->post_author, $product->id );
+        
+        $default = get_option('_grfx_default_size_option','3');
+        
 	$i=1;
 	?>
 		<select id="grfx-product-option" name="grfx-product-option">
@@ -265,7 +267,7 @@ function render_option_table(){
 			 * If size not enabled, skip.
 			 */
 			$size_jpeg_enabled = '_size_enabled_'.$i;
-            $type         = '_size_type_enabled_'.$i;
+                        $type              = '_size_type_enabled_'.$i;
             
 			if(! (int) $product->$size_jpeg_enabled || !in_array($product->$type, $available)){
 				$i++;
@@ -277,8 +279,9 @@ function render_option_table(){
 			$size_name    = get_option('_size_name_'.$i, __('Size '.$i, 'grfx'));
 			$size_price  = '_size_price_'.$i;
 			$size_pixels = '_size_pixels_'.$i;
+                        
 			?>
-			<option data-summary="<?php echo $i ?>" value="<?php echo $i ?>"><?php echo $size_name ?> (<?php  echo wc_price($product->$size_price);  ?>)</option>	
+			<option <?php echo $default == $i ? 'selected':'' ?> data-summary="<?php echo $i ?>" value="<?php echo $i ?>"><?php echo $size_name ?> (<?php  echo wc_price($product->$size_price);  ?>)</option>	
 			<?php $i++; ?>	
 			<?php endwhile; ?>	
 		</select>
@@ -289,7 +292,7 @@ function render_option_table(){
 			 * If size not enabled, skip.
 			 */
 			$size_jpeg_enabled = '_size_enabled_'.$i;
-            $type         = '_size_type_enabled_'.$i;
+                        $type = '_size_type_enabled_'.$i;
             
 			if(! (int) $product->$size_jpeg_enabled  || !in_array($product->$type, $available)){
 				$i++;
@@ -300,9 +303,13 @@ function render_option_table(){
 			$size_license = '_size_license_'.$i;	
 			$size_pixels  = '_size_pixels_'.$i;			
 			$size_calculated = grfx_scaled_image_size($product->_size_x, $product->_size_y, $product->$size_pixels);
-			
+			           
+                        if($product->$size_pixels == 0){
+                            $size_calculated = grfx_set_image_full_size_value($product, $size_pixels);
+                        }
+                        
 			?>
-			<div class="grfx-options-descriptions <?php echo $i==1?'show':'' ?>" id="grfx-option-description-<?php echo $i ?>">
+			<div class="grfx-options-descriptions <?php echo $i==$default?'show':'' ?>" id="grfx-option-description-<?php echo $i ?>">
 				
 				<span class="grfx-option-label"><?php _e('License', 'grfx') ?>: </span>
 					<span class="grfx-size-license-option">
@@ -666,7 +673,7 @@ add_action('woocommerce_payment_complete', 'grfx_custom_process_order', 10, 1);
 function grfx_custom_process_order($order_id) {
 	
     $order = new WC_Order( $order_id );
-    $user_id = (int)$order->user_id;
+    $user_id = (int) $order->user_id;
     $user_info = get_userdata($user_id);
     $items = $order->get_items();
 	
@@ -835,11 +842,8 @@ function grfx_filter_test($price, $product){
 function grfx_test(){
   
     $id = get_the_id();
-	
-		
 
-
-	global $woocommerce;
+    global $woocommerce;
 
     
     $product = wc_get_product($id);    

@@ -20,6 +20,7 @@
   background-color: white;
   height: 90%;
   overflow: scroll;
+  z-index: 20000;
 }
 .grfx-modal h1 {
   text-align: center;

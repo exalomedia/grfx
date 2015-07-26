@@ -64,12 +64,30 @@ function grfx_stock_image_settings( $settings, $current_section ) {
 			'id'       => 'grfx_download_limit',
 			'type'     => 'number',
 			'desc'     => __( '(Downloads)', 'grfx' ),
-			'default'  => '3',
-			'class'    => 'grfx-divider'
+			'default'  => '3',			
 		);
-		
+		               
+                
 		$i = 1;
-
+                
+                $default_size_options = array();
+                while($i <= count($grfx_size_default_names)){
+                    $default_size_options[(string) $i]  = get_option('_size_name_'.$i, $grfx_size_default_names['_size_name_'.$i]);
+                    $i++;
+                }
+                
+                $settings_stock_image[] = array(
+                        'id'       => '_grfx_default_size_option',
+                        'name'     => __( 'Default Size Option', 'grfx' ),
+                        'desc_tip' => __( 'Default size option available to customer.', 'grfx' ),				
+                        'type'     => 'select',
+                        'desc'     => '',
+                        'default'  => '1',
+                        'options'  => $default_size_options,
+                        'class'    => 'grfx-divider'                    
+                );
+                
+                $i=1;
 		while($i <= count($grfx_size_default_names)){		
 			
 			/**

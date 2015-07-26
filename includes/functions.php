@@ -452,3 +452,14 @@ function grfx_agency_submission_enabled(){
     return false;       
     
 }
+
+function grfx_set_image_full_size_value($product, $size_setting){
+
+    $size = $product->_size_x >= $product->_size_y ? $product->_size_x : $product->_size_y;
+    
+    update_post_meta($product->id, $size_setting, $size);
+    
+    $size_calculated = grfx_scaled_image_size($product->_size_x, $product->_size_y, $size);
+		    
+    return $size_calculated;
+}
