@@ -4,7 +4,7 @@ To ensure a proper environment, we recommend [Bluehost](http://www.bluehost.com/
 
 ------------------------------
 
-# grfx (graphics) - the Illustrator's Stock Image Authoring Tool ( http://www.grfx.co/ )
+# grfx (graphics) - the Illustrator's Stock Image Authoring Tool ( https://www.facebook.com/grfx.co/ )
 
  - **grfx** is a specialized open source tool for illustrators and graphic artists to independently publish stock images.
  - **grfx** empowers you to sell the following: **Images, vectors, photoshop files, zip files, and more.**
@@ -12,7 +12,7 @@ To ensure a proper environment, we recommend [Bluehost](http://www.bluehost.com/
  - **grfx** is a wordpress plugin.
  - **grfx** is a woocommerce extension. Get Woocommerce here: https://wordpress.org/plugins/woocommerce/
  - **grfx** will automatically take your image uploads and process them straight into ready-made woocommerce stock image products -- it's just like running your own personal stock image agency!
- - **grfx** is the first open source software spearheading the "indie-stock" movement. http://community.grfx.co/the-grfx-invention-of-indie-stock/
+ - **grfx** is the first open source software spearheading the "indie-stock" movement. https://www.facebook.com/grfx.co/the-grfx-invention-of-indie-stock/
 
 **grfx** can be used with any woocommerce compatible wordpress theme. Get one of those beautiful themes on http://www.themeforest.net and really wow your customers with your beautiful site and stock images for sale!
 

@@ -22,10 +22,10 @@
  *
  * @package    grfx
  * @subpackage grfx_Core
- * @author     Leo Blanchette <leo@grfx.com>
+ * @author     Leo Blanchette <leo@grfx.co>
  * @copyright  2012-2015 grfx
  * @license    http://www.gnu.org/licenses/gpl.html
- * @link       http://www.grfx.com
+ * @link       https://www.facebook.com/grfx.co
  */
 
 
@@ -255,7 +255,7 @@ function grfx_use_shell_exec() {
     
     if (!defined('grfx_use_shell_exec'))
         define('grfx_use_shell_exec', $has_shell_exec);  
-    
+
     return $has_shell_exec;
     
 }

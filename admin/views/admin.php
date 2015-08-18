@@ -8,7 +8,7 @@
  * @package   grfx
  * @author    Leo Blanchette <clipartillustration.com@gmail.com>
  * @license   GPL-2.0+
- * @link      http://www.grfx.com
+ * @link      https://www.facebook.com/grfx.co
  * @copyright 2014 Leo Blanchette
  */
 ?>
@@ -53,13 +53,13 @@
         <li>            
             <p>
             <?php
-            _e('Need help? Join the community at <strong><a href="http://community.grfx.co/">community.grfx.co/</a></strong>. We want your image-selling
+            _e('Need help? Join the community at <strong><a href="https://www.facebook.com/grfx.co/">facebook.com/grfx.co</a></strong>. We want your image-selling
             start-up to be successful. We can help you get up and running plus give you pointers to getting your work exposure.', 'grfx');
             ?>
             </p>
         </li>
         
 	</ol>
-	    
+        <p>Like us on <a href="https://www.facebook.com/grfx.co">Facebook</a> and we will send you a free puppy! ;)</p>
 </div>
 

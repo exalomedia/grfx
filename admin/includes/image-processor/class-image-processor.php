@@ -35,10 +35,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @package    grfx_ImageProcessor
- * @author     Leo Blanchette <leo@grfx.com>
+ * @author     Leo Blanchette <leo@grfx.co>
  * @copyright  2012-2015 grfx
  * @license    http://www.gnu.org/licenses/gpl.html
- * @link       http://www.grfx.com
+ * @link       https://www.facebook.com/grfx.co
  */
 function grfx_Watermark_Image( $source_path, $destination, $watermark_path ) {
 	
@@ -85,7 +85,7 @@ function grfx_Watermark_Image( $source_path, $destination, $watermark_path ) {
  * meant to be extended by other plugins.
  *
  * @package  grfx_ImageProcessor
- * @author  Leo Blanchette <leo@grfx.com>
+ * @author  Leo Blanchette <leo@grfx.co>
  */
 class grfx_Image_Processor {
 

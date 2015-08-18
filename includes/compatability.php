@@ -1,7 +1,7 @@
 <?php
 
 
-define('grfx_version', '1.1.85');
+define('grfx_version', '1.2.1');
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

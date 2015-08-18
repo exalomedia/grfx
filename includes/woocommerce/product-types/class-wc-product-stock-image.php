@@ -784,12 +784,15 @@ function grfx_correct_object_terms(){
     
     if($tags){
         wp_set_object_terms($post_id, $tags[0], 'product_tag'); 
+        delete_post_meta($post_id, 'grfx_finish_product_tag');
     }
     
     $type = get_post_meta($post_id, 'grfx_finish_product_type', false);
     
     if($type){
         wp_set_object_terms($post_id, $type[0], 'product_type');
+        delete_post_meta($post_id, 'grfx_finish_product_type');
+        
     }   
     
 }

@@ -21,17 +21,17 @@
  *
  * @package grfx_ImageProcessor
  * 
- * @author     Leo Blanchette <leo@grfx.com>
+ * @author     Leo Blanchette <leo@grfx.co>
  * @copyright  2012-2015 grfx
  * @license    http://www.gnu.org/licenses/gpl.html
- * @link       http://www.grfx.com
+ * @link       https://www.facebook.com/grfx.co
  */
 
 /**
  * grfx watermarking class which utilizes php's imagick. If the user has
  * imagick installed, this class is used by default.
  * 
- * @author  Leo Blanchette <leo@grfx.com>
+ * @author  Leo Blanchette <leo@grfx.co>
  */
 class grfx_Imagick_Watermark {
 

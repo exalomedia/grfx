@@ -35,7 +35,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: wc_add_to_cart_params.ajax_url,
+                url: grfx_ajaxurl,
                 data: ajax_data,
                 success: function (response) {
        

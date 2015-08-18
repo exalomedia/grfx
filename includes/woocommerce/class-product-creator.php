@@ -19,10 +19,10 @@
  *
  * @package grfx
  * @subpackage grfx_Woocommerce
- * @author     Leo Blanchette <leo@grfx.com>
+ * @author     Leo Blanchette <leo@grfx.co>
  * @copyright  2012-2015 grfx
  * @license    http://www.gnu.org/licenses/gpl.html
- * @link       http://www.grfx.com
+ * @link       https://www.facebook.com/grfx.co
  */
 
 /**
@@ -330,9 +330,9 @@ class grfx_Product_Creator {
 				!empty( $metadata->Title )    ? $this->product_title = $metadata->Title         : $this->product_title = '-';
 				!empty( $metadata->Description )  ? $this->product_description = $metadata->Description : $this->product_description = '-';
 				!empty( $metadata->Keywords ) ? $this->product_tags = $metadata->Keywords       : $this->product_tags = array();
-                !empty( $metadata->Keywords ) && is_array( $metadata->Keywords ) ? $this->product_tags_string = implode(',',$metadata->Keywords)       : $this->product_tags_string = '';
+                                !empty( $metadata->Keywords ) && is_array( $metadata->Keywords ) ? $this->product_tags_string = implode(',',$metadata->Keywords)       : $this->product_tags_string = '';
 				
-                $this->set_stock_image_data();
+                                $this->set_stock_image_data();
 				
 				//Make various image sizes			
 

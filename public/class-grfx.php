@@ -5,7 +5,7 @@
  * @package   grfx
  * @author    Leo Blanchette <clipartillustration.com@gmail.com>
  * @license   GPL-2.0+
- * @link      http://www.grfx.com
+ * @link      https://www.facebook.com/grfx.co
  * @copyright 2014 Leo Blanchette
  */
 
@@ -71,9 +71,9 @@ class grfx {
 		add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
 
         
-        //check and do cron
+                //check and do cron
 		add_action( 'init', array( $this, 'do_cron' ), 1 );
-        //check and do upload
+                //check and do upload
 		add_action( 'init', array( $this, 'doing_upload' ), 1 );        
         
         
@@ -88,13 +88,15 @@ class grfx {
 			$this->install_db();
 			grfx_set_sitepass();
 			$this->activate_exiftool();
-            $this->set_defaults();
+                        $this->set_defaults();
 		}
         
-        add_action('wp_head', array($this, 'preview_image_open_graph_data'));
+                add_action('wp_head', array($this, 'preview_image_open_graph_data'));
         
-        add_filter('woocommerce_single_product_image_html', array($this, 'image_schema'));
-        
+                add_filter('woocommerce_single_product_image_html', array($this, 'image_schema'));
+            
+                add_action('wp_head', array($this, 'ajaxurl'));
+
 		/* Define custom functionality.
 		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
@@ -103,6 +105,16 @@ class grfx {
 
 	}
 
+
+    public function ajaxurl() {
+        ?>
+        <script type="text/javascript">
+        var grfx_ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+        </script>
+        <?php
+    }
+        
+        
     /**
      * Handles open graph data for stock image product
      * 
@@ -193,16 +205,16 @@ class grfx {
         global $product;
         
         /**
-                  *  IMAGE
-                  */
+         *  IMAGE
+         */                                                                                
         $post_thumbnail_id = get_post_thumbnail_id();
         $post_thumbnail_url = wp_get_attachment_url( $post_thumbnail_id );           
         $this->image_url = $post_thumbnail_url;       
         
         
         /**
-                  *  TAGS
-                  */        
+         *  TAGS
+         */        
         $tags = strip_tags($product->get_tags( ', ', '', '' ));        
 
         

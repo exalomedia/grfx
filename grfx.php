@@ -7,16 +7,16 @@
  * @package   grfx
  * @author    Leo Blanchette <clipartillustration.com@gmail.com>
  * @license   GPL-2.0+
- * @link      http://www.grfx.co
+ * @link      https://www.facebook.com/grfx.co
  * @copyright 2014 Leo Blanchette
  *
  * @wordpress-plugin
  * Plugin Name:       Wordpress Stock Images by grfx
- * Plugin URI:        http://www.grfx.co
+ * Plugin URI:        https://www.facebook.com/grfx.co
  * Description:       Sell stock images. Beautifully. Creates a specialized WooCommerce stock image product type. Loved by stock image producers, illustrators, and graphic artists. Automatically processes images into downloadable products, priced by size and license. Light-weight. Great SEO. 
- * Version: 1.1.85
+ * Version: 1.2.1
  * Author:            Leo Blanchette
- * Author URI: http://www.grfx.co       
+ * Author URI: https://www.facebook.com/grfx.co       
  * Text Domain:  grfx
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -29,6 +29,7 @@
  * Get main functions file
  */
 require_once( plugin_dir_path( __FILE__ ) . 'includes/compatability.php' );
+
 
 
 /* ----------------------------------------------------------------------------*
