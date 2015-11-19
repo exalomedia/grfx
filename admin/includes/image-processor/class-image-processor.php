@@ -458,9 +458,9 @@ class grfx_Image_Processor {
         
         $command = grfx_exiftool . ' -json ';
         $command .= $file_name;
-
+        
         $results = shell_exec($command);
-		
+	        
         if ($results && is_string($results)) {
             $meta_object = json_decode($results, false);
             $this->metadata = $meta_object[0];

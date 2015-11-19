@@ -404,12 +404,20 @@ function grfx_plugin_info(){
 		$image_system = __('(Using GD Library)', 'grfx');
 	}
 	
+        if(grfx_use_shell_exec()){
+            $shell_exec = '<br />' . __('Shell exec functions allowed by host (enables metadata-extraction from images)', 'grfx');            
+        } else {
+            $shell_exec = '<br />' . __('Shell exec functions not allowed by host (enables metadata-extraction from images). You should enable this.', 'grfx');            
+        }
+        
 	$summary = '';
 	$summary .= __('grfx ');
 	$summary .= ' '.grfx_version;
 	$summary .= ' '.$image_system;
+        $summary .= ' '.$shell_exec;
 	$summary .= '';
 	
+        
 	return $summary;
 }
 

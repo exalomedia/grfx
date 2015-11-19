@@ -1,7 +1,7 @@
 <?php
 
 
-define('grfx_version', '1.2.1');
+define('grfx_version', '1.2.2');
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -26,7 +26,7 @@ function grfx_proper_hosting(){
  * @return boolean|string
  */
 function grfx_encourage_fix(){
-    return '<br />'. __('Please resolve these problems and <strong>grfx</strong> should work great for you. If you cannot resolve them on your current host, ', 'grfx').
+    return '<br />'. __('Please resolve these issues and <strong>grfx</strong> should work great for you. If you cannot resolve them on your current host, ', 'grfx').
         grfx_proper_hosting();
 }
 
