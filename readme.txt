@@ -2,7 +2,7 @@
 Contributors: grfx
 Tags: wooCommerce stock images, stock photos, image library, stock photography, shop, watermark, image seo, photo gallery, image, sell photos, graphic design, album, stock images, photo, pictures, gallery, sell stockphotos, online art, photographer, multisite, image-store, clipart, image gallery, picture, sell, online store, album, digital images, vectors, royalty free, illustrations, graphics, media, store, ecommerce, photoblog, photos, seo, graphicart, artstore, digital downloads, illustrator, stockphotos, photogallery, shopping, photography store, sell photographs, e-commerce, royalty free images, watermarking, sell pictures, portfolio, thumbnails, macrostock, grfx, photography, image hosting, artist, photo management, digital art, woocommerce, art, selling, image album, image processing
 Requires at least: 4.2.0
-Tested up to: 4.4
+Tested up to: 4.4.1
 Stable tag: 1.1.68
 License: gpl
 License URI: http://www.gnu.org/licenses/#GPL
